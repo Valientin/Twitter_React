@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import createSagaMiddleware from 'redux-saga';
+import { firebase } from './app/firebase';
 
 import mySaga from './app/sagas'
 import reducers from './app/reducers';
@@ -20,14 +21,17 @@ const store = createStore(
     applyMiddleware(sagaMiddleware)
 )
 
-const App = () => (
+const App = (props) => (
     <Provider store={store}>
         <BrowserRouter>
-    	    <Routes />
+    	    <Routes {...props}/>
         </BrowserRouter>
     </Provider>
 )
 
 sagaMiddleware.run(mySaga);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+firebase.auth().onAuthStateChanged((user) => {
+    ReactDOM.render(<App />, document.getElementById('root'));
+})
