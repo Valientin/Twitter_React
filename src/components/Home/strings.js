@@ -1,0 +1,1 @@
+export const title = 'My webpack React APP';
