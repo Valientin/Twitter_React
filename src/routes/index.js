@@ -1,12 +1,14 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+// import PrivateRoutes from '../components/hoc/AuthRoute/privateRoute';
+import PublicRoutes from '../components/hoc/AuthRoute/publicRoute';
 
-import Home from '../containers/home';
+import Home from '../components/Home';
 
-const Routes = () => {
+const Routes = (props) => {
 	return(
 		<Switch>
-			<Route path="/" exact component={Home} />
+			<PublicRoutes {...props} restricted={false} path='/' exact component={Home} />
 		</Switch>
 	)
 }
