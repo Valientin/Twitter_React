@@ -20,6 +20,13 @@
 		display: flex;
 		align-items: center;
 	}
+	a{
+		width: 100%;
+		color: #a8a8a8;
+	}
+	a:hover{
+		color: #1da1f2;
+	}
 
 	ul {
 		width: 100%;
@@ -33,14 +40,6 @@
 			display: inline-block;
 			text-decoration:none;
 			padding: 10px 20px 10px 10px;
-			 
-			a{
-				width: 100%;
-				color: #a8a8a8;
-			}
-			a:hover{
-				color: #1da1f2;
-			}
 		}
 	}
 }
