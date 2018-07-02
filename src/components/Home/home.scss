@@ -1,15 +1,114 @@
 .root-wrapper {
-    background: #6f78a7;
+    background: #ffffff;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    text-align: center;
 }
 
-.title{
-    text-transform: uppercase;
-    font-size: 30px;
-    color: #fffefe;
-    font-weight: 200;
-    margin: auto;
+.right-block {
+    width: 50%;
+    background: #1da1f2;
+
+    &__text {
+        transform: translateY(-50%);
+        top: 50%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    &__elem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 340px;
+        width: 100%;
+        margin: 0 auto 20px;
+    }
+
+    span {
+        color: #fff;
+        font-size: 18px;
+        min-width: 85%;
+    }
+}
+
+.left-block {
+    width: 50%;
+
+    &__text {
+        transform: translateY(-50%);
+        top: 50%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 10%;
+    }
+}
+
+.block-text {
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    &__title {
+        font-size: 27px;
+        line-height: 32px;
+        margin-bottom: 48px;
+    }
+
+    &__description {
+        color: #14171a;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 16px;
+    }
+}
+
+.top-link__login {
+    border: 2px solid #1da1f2;
+    border-radius: 100px;
+    box-shadow: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 8px 16px;
+    white-space: nowrap;
+    color: #1da1f2;
+    outline: none;
+
+    &:hover{
+        background: #e9f7ff;
+    }
+}
+
+.bottom-link {
+    display: flex;
+    flex-direction: column;
+
+    &__all {
+        border-radius: 100px;
+        box-shadow: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 20px;
+        padding: 8px 16px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    &__login {
+        border: 1px solid #1da1f2;
+        color: #1da1f2;
+    }
+
+    &__register {
+        background: #1da1f2;
+        color: #fff;
+        margin-bottom: 16px;
+    }
 }
