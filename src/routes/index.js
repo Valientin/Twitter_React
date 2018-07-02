@@ -4,13 +4,14 @@ import { Switch } from 'react-router-dom';
 import PublicRoutes from '../components/hoc/AuthRoute/publicRoute';
 
 import Home from '../components/Home';
-import Header from '../components/hoc/Header';
+import Layout from '../components/hoc/Layout';
 
 const Routes = (props) => {
 	return(
 		<Switch>
-			<PublicRoutes {...props} restricted={false} path='/' exact component={Home} />
-			<PublicRoutes {...props} restricted={false} path='/home' exact component={Header} />
+			<Layout>
+				<PublicRoutes {...props} restricted={false} path='/' exact component={Home} />
+			</Layout>	
 		</Switch>
 	)
 }
