@@ -7,6 +7,7 @@
 .right-block {
     width: 50%;
     background: #1da1f2;
+    padding: 0 15px;
 
     &__text {
         transform: translateY(-50%);
@@ -34,6 +35,7 @@
 
 .left-block {
     width: 50%;
+    padding: 0 15px;
 
     &__text {
         transform: translateY(-50%);
@@ -41,7 +43,9 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        padding: 10%;
+        max-width: 380px;
+        width: 100%;
+        margin: 0 auto;
     }
 }
 
@@ -78,6 +82,7 @@
     padding: 8px 16px;
     white-space: nowrap;
     color: #1da1f2;
+    background: transparent;
     outline: none;
 
     &:hover{
@@ -99,16 +104,27 @@
         padding: 8px 16px;
         text-align: center;
         white-space: nowrap;
+        outline: none;
     }
 
     &__login {
         border: 1px solid #1da1f2;
         color: #1da1f2;
+        background: transparent;
+
+        &:hover {
+            background: #e9f7ff;
+        }
     }
 
     &__register {
         background: #1da1f2;
         color: #fff;
         margin-bottom: 16px;
+        border: none;
+
+        &:hover {
+            background: #146596;
+        }
     }
 }
