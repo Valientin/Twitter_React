@@ -21,11 +21,10 @@ const Routes = (props) => {
 			<Layout {...props}>
 				<PublicRoutes {...props} restricted={true} path='/login' exact component={Login} />
 				<PublicRoutes {...props} restricted={true} path='/register' exact component={Register} />
-				<PrivateRoutes {...props} path='/profile' exact component={Profile} />
 				<Profile {...props}>
-					<PrivateRoutes {...props} path='/user' exact component={Tweets} />
-					<PrivateRoutes {...props} path='/user/folowers' exact component={Followers} />
-					<PrivateRoutes {...props} path='/user/folowed' exact component={Followed} />
+					<PrivateRoutes {...props} path='/profile' exact component={Tweets} />
+					<PrivateRoutes {...props} path='/profile/folowers' exact component={Followers} />
+					<PrivateRoutes {...props} path='/profile/folowed' exact component={Followed} />
 				</Profile	>
 			</Layout>
 		</Switch>

@@ -24,19 +24,19 @@ export default class Profile extends React.Component {
 						<div className="user-nav">
 							<ul>
 								<li>
-									<Link to="/user" className="user-nav__link">
+									<Link to="/profile" className="user-nav__link">
 		                                <span>Твиты</span>
 		                                <span><b>5</b></span>
 		                            </Link>
 								</li>
 								<li>
-									<Link to="/user/folowed" className="user-nav__link">
+									<Link to="/profile/folowed" className="user-nav__link">
 		                                <span>Читаемые</span>
 		                                <span><b>5</b></span>
 		                            </Link>
 								</li>
 								<li>
-									<Link to="/user/folowers" className="user-nav__link">
+									<Link to="/profile/folowers" className="user-nav__link">
 		                                <span>Читатели</span>
 		                                <span><b>5</b></span>
                             		</Link>
