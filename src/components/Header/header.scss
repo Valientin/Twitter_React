@@ -1,0 +1,103 @@
+
+.header {
+	padding: 6px 25px;
+	border-bottom: 1px solid #c1c0c0;
+}
+.container {
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+}
+.nav-left {
+	display: flex;
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+	
+	&__link {
+		display: flex;
+		align-items: center;
+		color: #a8a8a8;
+		font-size: 14px;
+		position: relative;
+
+		&:hover {
+			color: #1da1f2;
+
+			path {
+				fill: #1da1f2;
+			}
+
+			&::before {
+				content: '';
+				width: 122%;
+				bottom: -14px;
+				left: -11%;
+				height: 2px;
+				background: #1da1f2;
+				position: absolute;
+			}
+		}
+
+		&.hide {
+			&::before {
+				bottom: -12px; 
+			}
+		}
+	}
+
+	li {
+		margin-right: 15px;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+	}
+}
+
+.logo {
+	margin: 0 25px;
+}
+
+.nav-right {
+	align-items: center;
+    display: flex;
+}
+.search {
+	margin-right: 15px;
+
+	input {
+		padding: 7px 10px;
+		font-size: 13px;
+		height: 100%;
+		color: #757575;
+		border: 1px solid #c2c2c2;
+		border-radius: 30px;
+		outline: none;
+
+		&::placeholder {
+			font-style: italic;
+			color: #c2c2c2;
+		}
+	}
+}
+.tweet-button{
+	border-radius: 100px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 20px;
+	padding: 7px 16px;
+	text-align: center;
+	background: #1da1f2;
+	border: none;
+	color: #fff;
+	outline: none;
+
+	&:hover {
+		background: #1f8acc;
+	}
+}
