@@ -129,7 +129,7 @@ class Login extends React.Component {
                 loading: false,
                 loginError: 'Пользователь не найден. Повторите попытку!'
             })
-        }
+        } 
     }
 
     showLoader = () => (
