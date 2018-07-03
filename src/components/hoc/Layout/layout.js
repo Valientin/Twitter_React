@@ -7,7 +7,7 @@ const Layout = (props) => {
 			<Header {...props}/>
 			{props.children}
 		</div>
-		)
+	)
 }
 export default Layout
 

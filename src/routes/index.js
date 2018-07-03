@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 import PrivateRoutes from '../components/hoc/AuthRoute/privateRoute';
 import PublicRoutes from '../components/hoc/AuthRoute/publicRoute';
 
@@ -22,10 +22,10 @@ const Routes = (props) => {
 				<PublicRoutes {...props} restricted={true} path='/login' exact component={Login} />
 				<PublicRoutes {...props} restricted={true} path='/register' exact component={Register} />
 				<Profile {...props}>
-					<PrivateRoutes {...props} path='/profile' exact component={Tweets} />
 					<PrivateRoutes {...props} path='/profile/folowers' exact component={Followers} />
 					<PrivateRoutes {...props} path='/profile/folowed' exact component={Followed} />
-				</Profile	>
+					<PrivateRoutes {...props} path='/profile/tweets' exact component={Tweets} />
+				</Profile>
 			</Layout>
 		</Switch>
 	)

@@ -1,15 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
+import PrivateRoutes from '../hoc/AuthRoute/privateRoute';
+import Tweets from '../Tweets';
+import Followers from '../Followers';
+import Followed from '../Followed';
 
 import './profile.scss';
 import Icons from '../Icons';
 
-
-
-
-export default class Profile extends React.Component {
-
-
+class Profile extends React.Component {
 
 	render(){
 		return(
@@ -24,7 +23,7 @@ export default class Profile extends React.Component {
 						<div className="user-nav">
 							<ul>
 								<li>
-									<Link to="/profile" className="user-nav__link">
+									<Link to="/profile/tweets" className="user-nav__link">
 		                                <span>Твиты</span>
 		                                <span><b>5</b></span>
 		                            </Link>
@@ -64,10 +63,8 @@ export default class Profile extends React.Component {
 					</div>
 				</div>
 			</div>
-
-
-
 		)	
 	}
-
 }
+
+export default Profile;
