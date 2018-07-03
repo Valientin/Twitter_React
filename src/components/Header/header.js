@@ -54,7 +54,7 @@ export default class Header extends React.Component{
             <div className="header" style={{padding: "11px 25px"}}>
                 <div className="container" >
                     <div className="nav-left" >
-                        <Link to="/home" className="nav-left__link hide">
+                        <Link to="/" className="nav-left__link hide">
                             <Icons 
                                 icon='twitter' 
                                 size="20px" 
