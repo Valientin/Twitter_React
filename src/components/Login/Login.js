@@ -47,6 +47,7 @@ class Login extends React.Component {
         }
     }
 
+
     updateForm = (elem) => {
         const newFormData = {
             ...this.state.formData
@@ -112,13 +113,22 @@ class Login extends React.Component {
                 loginError: ''
                 })
 
-                console.log(dataToSubmit);
+                this.props.loginUser(dataToSubmit);
 
             } else {
                 this.setState({
                     loginError: validForm
                 })
             }
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.log.loginError){
+            this.setState({
+                loading: false,
+                loginError: 'Пользователь не найден. Повторите попытку!'
+            })
         }
     }
 
@@ -131,9 +141,9 @@ class Login extends React.Component {
     )
 
     showError = () => (
-        this.state.registerError !== '' ?
+        this.state.loginError !== '' ?
             <span className="login-block__error">
-                {this.state.registerError}
+                {this.state.loginError}
             </span>
         : null
     )

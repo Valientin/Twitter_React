@@ -73,7 +73,7 @@ export default class Header extends React.Component{
     render(){
         return(
             <header>
-                {this.showTemplate(false)}
+                {this.showTemplate(this.props.user)}
             </header>
         )
     }
