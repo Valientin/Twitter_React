@@ -4,7 +4,10 @@ import { Switch } from 'react-router-dom';
 import PublicRoutes from '../components/hoc/AuthRoute/publicRoute';
 
 import Home from '../components/Home';
+
 import Login from '../containers/login';
+import Layout from '../components/hoc/Layout';
+
 
 const Routes = (props) => {
 	return(
