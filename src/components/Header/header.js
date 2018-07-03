@@ -5,7 +5,11 @@ import './header.scss';
 import Icons from '../Icons';
 import { searching, home, tweet, direct } from './strings';
 
-export default class Header extends React.Component{
+export default class Header extends React.Component {
+
+    setLogout = () => {
+        this.props.logout()
+    }
 
     showTemplate = (user) => {
         let template = null;
@@ -35,9 +39,17 @@ export default class Header extends React.Component{
                                 <span>{direct}</span>
                             </Link>
                         </li>
+                        <li className="logout" onClick={() => this.setLogout()}>
+                            <Icons
+                                icon='logout' 
+                                size="20px" 
+                                color="#a8a8a8"
+                                style={{margin: '0 5px 0 0'}}
+                            />
+                        </li>
                     </ul>
                     <div className="logo">
-                        <Link to="/"><Icons icon='twitter' size="20px" color="#1da1f2"/></Link>
+                        <Icons icon='twitter' size="20px" color="#1da1f2"/>
                     </div>
                     <div className="nav-right">
                         <div className="search">

@@ -10,7 +10,7 @@ import { firebaseAuth } from './app/firebase';
 import mySaga from './app/sagas'
 import reducers from './app/reducers';
 
-import Routes from './routes/index';
+import Routes from './routes';
 import './index.scss';
 
 const sagaMiddleware = createSagaMiddleware();

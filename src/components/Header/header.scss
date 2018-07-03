@@ -34,7 +34,7 @@
 			&::before {
 				content: '';
 				width: 122%;
-				bottom: -14px;
+				bottom: -18px;
 				left: -11%;
 				height: 2px;
 				background: #1da1f2;
@@ -99,5 +99,15 @@
 
 	&:hover {
 		background: #1f8acc;
+	}
+}
+
+.logout {
+	cursor: pointer;
+
+	&:hover {
+		path {
+			fill: #1f8acc;
+		}
 	}
 }
