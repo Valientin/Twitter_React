@@ -23,19 +23,19 @@ class Profile extends React.Component {
 						<div className="user-nav">
 							<ul>
 								<li>
-									<Link to="/profile/tweets" className="user-nav__link">
+									<Link to="/profile" className="user-nav__link">
 		                                <span>Твиты</span>
 		                                <span><b>5</b></span>
 		                            </Link>
 								</li>
 								<li>
-									<Link to="/profile/folowed" className="user-nav__link">
+									<Link to="/profile/followed" className="user-nav__link">
 		                                <span>Читаемые</span>
 		                                <span><b>5</b></span>
 		                            </Link>
 								</li>
 								<li>
-									<Link to="/profile/folowers" className="user-nav__link">
+									<Link to="/profile/followers" className="user-nav__link">
 		                                <span>Читатели</span>
 		                                <span><b>5</b></span>
                             		</Link>
@@ -59,7 +59,11 @@ class Profile extends React.Component {
 									<span>Дата регистрации: 3 июля 2018</span>
 								</div>
 						</div>
-						{this.props.children}
+						<Switch>
+							<PrivateRoutes {...this.props} path='/profile/followers' exact component={Followers} />
+							<PrivateRoutes {...this.props} path='/profile/followed' exact component={Followed} />
+							<PrivateRoutes {...this.props} path='/profile' exact component={Tweets} />
+					</Switch>
 					</div>
 				</div>
 			</div>
