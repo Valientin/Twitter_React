@@ -8,7 +8,7 @@ import Home from '../components/Home';
 import Login from '../containers/login';
 import Register from '../containers/register';
 import Layout from '../components/hoc/Layout';
-import Profile from '../components/Profile';
+import Profile from '../containers/profile';
 import NotFound from '../components/NotFound';
 
 
