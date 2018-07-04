@@ -52,11 +52,12 @@ class Login extends React.Component {
         const newFormData = {
             ...this.state.formData
         }
+        console.log(elem);
         const newElem = {
             ...newFormData[elem.id]
         }
         newElem.value = elem.e.target.value;
-        if(elem.blur){
+        if(elem.blur){ 
             let validData = this.validate(newElem);
             newElem.valid = validData[0];
             newElem.validationMessage = validData[1]

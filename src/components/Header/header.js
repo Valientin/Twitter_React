@@ -1,18 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import FormField from '../FormFields';
 import './header.scss';
 import Icons from '../Icons';
-import { searching, home, tweet, direct } from './strings';
+import { searching, home, tweet, direct, validTweet } from './strings';
+
 
 export default class Header extends React.Component {
-    constructor(props){
-        super(props);
 
-        this.state = {
-            showUserConfig: false
+    state = {
+        showUserConfig: false,
+        showTweetForm: false,
+        formData: {
+            tweet: {
+                element: 'textarea',
+                value: '',
+                config: {
+                    name: 'tweet_input',
+                    type: 'tweet',
+                    className: 'tweet_input',
+                    placeholder: 'Что нового?'
+                },
+                validation: {
+                    required: true,
+                    tweet:true
+                },
+                valid: false,
+                touched: false,
+                validationMessage: ''
+            }
         }
     }
+    
 
     componentDidMount(){
         this.props.getProfileData(this.props.user.uid);
@@ -31,10 +50,10 @@ export default class Header extends React.Component {
     
     documentClickHandler = () => {
         this.setState({
-            showUserConfig: false
+            showUserConfig: false,
+            showTweetForm: false
         });
     }
-
     dropdownClickHandler = (e) => {
         e.nativeEvent.stopImmediatePropagation();
     }
@@ -43,6 +62,84 @@ export default class Header extends React.Component {
         this.setState({
             showUserConfig: !this.state.showUserConfig
         })
+    }
+    toggleTweetForm = () => {
+        this.setState({
+            showTweetForm: !this.state.showTweetForm
+        })
+    }
+
+    updateForm = (elem) => {
+        const newFormData = {
+            ...this.state.formData
+        }
+        console.log(elem);
+        
+        const newElem = {
+            ...newFormData[elem.id]
+        }
+        newElem.value = elem.e.target.value;
+        
+        if(elem.blur){
+            let validData = this.validate(newElem);
+            newElem.valid = validData[0];
+            newElem.validationMessage = validData[1]
+        }
+        
+        newElem.touched = elem.blur;
+        newFormData[elem.id] = newElem;
+        
+        this.setState({
+            formData: newFormData
+        })
+
+    }
+
+    validate = (elem) => {
+        let error = [true,''];
+        
+        if(elem.validation.tweet){
+            const valid = elem.value.length >= 5;
+            const message = `${!valid ? validTweet : ''}`;
+            error = !valid ? [valid, message] : error
+        }
+
+        if(elem.validation.required){
+            const valid = elem.value.trim() !== '';
+            const message = `${!valid ? validRequire : ''}`;
+            error = !valid ? [valid, message] : error
+        }
+
+        return error;
+    }
+
+    submitForm = (e, type) => {
+        e.preventDefault();
+        if(type !== null){
+            let dataToSubmit = {};
+            let formIsValid = true;
+
+            for(let key in this.state.formData){
+                dataToSubmit[key] = this.state.formData[key].value
+            }
+            for(let key in this.state.formData){
+                formIsValid = this.state.formData[key].valid && formIsValid;
+            }
+
+            if(formIsValid){
+                this.setState({
+                loading: true,
+                loginError: ''
+                })
+
+
+
+            } else {
+                this.setState({
+                    loginError: validForm
+                })
+            }
+        }
     }
 
     showUserConfig = () => (
@@ -65,6 +162,30 @@ export default class Header extends React.Component {
             </div>
         : null
     )
+    showTweetForm = () => (
+        this.state.showTweetForm ?
+        <div className="tweet-form-wrapper"  >
+            <div className="tweet-form" onClick={this.dropdownClickHandler} >
+                <div className="tweet-form__title">
+                    <h3>Новый твит</h3>
+                
+                </div>
+                <div className="tweet-form__form">
+                    <div className="tweet-form__field" >
+                        <FormField
+                            id={'tweet'}
+                            formData={this.state.formData.tweet}
+                            change={(elem) => this.updateForm(elem)}
+                        />
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        : null
+    )
+
+
 
     showTemplate = (user) => {
         let template = null;
@@ -107,8 +228,12 @@ export default class Header extends React.Component {
                             />
                             {this.showUserConfig()}
                         </div>
-                        <button className="tweet-button">{tweet}</button>
+                        <div onClick={this.dropdownClickHandler}>
+                        <button className="tweet-button" onClick={() => this.toggleTweetForm()}>{tweet}</button>
+                        </div>
+                        
                     </div>
+                    {this.showTweetForm()} 
                 </div>
             )
         : template = (
