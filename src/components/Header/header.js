@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import FormField from '../FormFields';
 import './header.scss';
 import Icons from '../Icons';
 import { searching, home, tweet, direct } from './strings';
@@ -10,7 +10,26 @@ export default class Header extends React.Component {
         super(props);
 
         this.state = {
-            showUserConfig: false
+            showUserConfig: false,
+            showTweetForm: false,
+            formData: {
+                tweet: {
+                    element: 'textarea',
+                    value: '',
+                    config: {
+                        name: 'tweet_input',
+                        type: 'tweet',
+                        className: 'tweet_input',
+                        placeholder: 'Что нового?'
+                    },
+                    validation: {
+                        required: true
+                    },
+                    valid: false,
+                    touched: false,
+                    validationMessage: ''
+                },
+            }
         }
     }
 
@@ -37,6 +56,11 @@ export default class Header extends React.Component {
             showUserConfig: !this.state.showUserConfig
         })
     }
+    toggleTweetForm = () => {
+        this.setState({
+            showTweetForm: !this.state.showTweetForm
+        })
+    }
 
     showUserConfig = () => (
         this.state.showUserConfig ?
@@ -58,6 +82,28 @@ export default class Header extends React.Component {
             </div>
         : null
     )
+    showTweetForm = () => (
+        this.state.showTweetForm ?
+        <div className="tweet-form-wrapper">
+            <div className="tweet-form" onClick={this.dropdownClickHandler}>
+                <div className="tweet-form__title">
+                    <h3>TWEEEET</h3>
+                
+                </div>
+                <div className="tweet-form__field">
+                    <FormField
+                        id={'Textarea'}
+                        formData={this.state.formData.tweet}
+                        change={(elem) => this.updateForm(elem)}
+                    />
+                </div>
+                
+            </div>
+        </div>
+        : null
+    )
+
+
 
     showTemplate = (user) => {
         let template = null;
@@ -100,8 +146,9 @@ export default class Header extends React.Component {
                             />
                             {this.showUserConfig()}
                         </div>
-                        <button className="tweet-button">{tweet}</button>
+                        <button className="tweet-button" onClick={this.toggleTweetForm}>{tweet}</button>
                     </div>
+                    {this.showTweetForm()} 
                 </div>
             )
         : template = (
