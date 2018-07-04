@@ -14,7 +14,7 @@ export default class Header extends React.Component {
             showTweetForm: false,
             formData: {
                 tweet: {
-                    element: 'textarea',
+                    element: 'input',
                     value: '',
                     config: {
                         name: 'tweet_input',
@@ -43,10 +43,10 @@ export default class Header extends React.Component {
     
     documentClickHandler = () => {
         this.setState({
-            showUserConfig: false
+            showUserConfig: false,
+            showTweetForm: false
         });
     }
-
     dropdownClickHandler = (e) => {
         e.nativeEvent.stopImmediatePropagation();
     }
@@ -60,6 +60,75 @@ export default class Header extends React.Component {
         this.setState({
             showTweetForm: !this.state.showTweetForm
         })
+    }
+
+    updateForm = (elem) => {
+        const newFormData = {
+            ...this.state.formData
+        }
+        const newElem = {
+            ...newFormData[elem.id]
+        }
+        newElem.value = elem.e.target.value;
+        if(elem.blur){
+            let validData = this.validate(newElem);
+            newElem.valid = validData[0];
+            newElem.validationMessage = validData[1]
+        }
+
+        newElem.touched = elem.blur;
+        newFormData[elem.id] = newElem;
+
+        this.setState({
+            formData: newFormData
+        })
+    }
+
+    validate = (elem) => {
+        let error = [true,''];
+
+        if(elem.validation.tweet){
+            const valid = elem.value.length >= 5;
+            const message = `${!valid ? validTweet : ''}`;
+            error = !valid ? [valid, message] : error
+        }
+
+        if(elem.validation.required){
+            const valid = elem.value.trim() !== '';
+            const message = `${!valid ? validRequire : ''}`;
+            error = !valid ? [valid, message] : error
+        }
+
+        return error;
+    }
+
+    submitForm = (e, type) => {
+        e.preventDefault();
+        if(type !== null){
+            let dataToSubmit = {};
+            let formIsValid = true;
+
+            for(let key in this.state.formData){
+                dataToSubmit[key] = this.state.formData[key].value
+            }
+            for(let key in this.state.formData){
+                formIsValid = this.state.formData[key].valid && formIsValid;
+            }
+
+            if(formIsValid){
+                this.setState({
+                loading: true,
+                loginError: ''
+                })
+
+
+
+            } else {
+                this.setState({
+                    loginError: validForm
+                })
+            }
+        }
     }
 
     showUserConfig = () => (
@@ -84,18 +153,20 @@ export default class Header extends React.Component {
     )
     showTweetForm = () => (
         this.state.showTweetForm ?
-        <div className="tweet-form-wrapper">
-            <div className="tweet-form" onClick={this.dropdownClickHandler}>
+        <div className="tweet-form-wrapper"  >
+            <div className="tweet-form" onClick={this.dropdownClickHandler} >
                 <div className="tweet-form__title">
-                    <h3>TWEEEET</h3>
+                    <h3>Новый твит</h3>
                 
                 </div>
-                <div className="tweet-form__field">
-                    <FormField
-                        id={'Textarea'}
-                        formData={this.state.formData.tweet}
-                        change={(elem) => this.updateForm(elem)}
-                    />
+                <div className="tweet-form__form">
+                    <div className="tweet-form__field" >
+                        <FormField
+                            id={'input'}
+                            formData={this.state.formData.tweet}
+                            change={(elem) => this.updateForm(elem)}
+                        />
+                    </div>
                 </div>
                 
             </div>
@@ -146,7 +217,10 @@ export default class Header extends React.Component {
                             />
                             {this.showUserConfig()}
                         </div>
-                        <button className="tweet-button" onClick={this.toggleTweetForm}>{tweet}</button>
+                        <div onClick={this.dropdownClickHandler}>
+                        <button className="tweet-button" onClick={() => this.toggleTweetForm()}>{tweet}</button>
+                        </div>
+                        
                     </div>
                     {this.showTweetForm()} 
                 </div>
