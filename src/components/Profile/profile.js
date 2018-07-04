@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Switch, Recirect } from 'react-router-dom';
+import { NavLink, Switch, Recirect } from 'react-router-dom';
 import { Redirect } from 'react-router'
 import PrivateRoutes from '../hoc/AuthRoute/privateRoute';
 import Tweets from '../Tweets';
@@ -19,38 +19,25 @@ class Profile extends React.Component {
 				</div>
 				<div className="user-header-wrapper">
 					<div className="user-header">
-						<div className="user-info" align="center">
-							<span>PHOTO</span>
-						</div>
-						<div className="user-nav">
-							<ul>
-								<li>
-									<Link to="/profile" className="user-nav__link">
-		                                <span>Твиты</span>
-		                                <span><b>5</b></span>
-		                            </Link>
-								</li>
-								<li>
-									<Link to="/profile/followed" className="user-nav__link">
-		                                <span>Читаемые</span>
-		                                <span><b>5</b></span>
-		                            </Link>
-								</li>
-								<li>
-									<Link to="/profile/followers" className="user-nav__link">
-		                                <span>Читатели</span>
-		                                <span><b>5</b></span>
-                            		</Link>
-								</li>
-							</ul>
-						</div>
+						<ul className="user-nav">
+							<li>
+								<NavLink to="/profile/tweets" className="user-nav__link">Твиты<span>5</span></NavLink>
+							</li>
+							<li>
+								<NavLink to="/profile/folowed" className="user-nav__link">Читаемые<span>5</span></NavLink>
+							</li>
+							<li>
+								<NavLink to="/profile/folowers" className="user-nav__link">Читатели<span>5</span></NavLink>
+							</li>
+						</ul>
+						<button className="user-header__change">Изменить профиль</button>
 					</div>
 				</div>
 				<div className="content-wrapper">
 					<div className="content">
 						<div className="user-info">
 								<h3>Максим Руденко</h3>
-								<span>@rudenko.max1</span>
+								<span className="user-info__username">@rudenko.max1</span>
 								<div className="user-info__calendar">
 									<span><Icons 
 	                                    icon='calendar' 
@@ -58,15 +45,16 @@ class Profile extends React.Component {
 	                                    color="7a7a7a"
 	                                    style={{margin: '0 5px 0 0'}}
                                 	/></span>
-									<span>Дата регистрации: 3 июля 2018</span>
+									<span>Регистрация: 3 июля 2018</span>
 								</div>
+								<div className="user-info__image"></div>
 						</div>
 						<Switch>
 							<PrivateRoutes {...this.props} path='/profile/followers' exact component={Followers} />
 							<PrivateRoutes {...this.props} path='/profile/followed' exact component={Followed} />
-							<PrivateRoutes {...this.props} path='/profile' exact component={Tweets} />	
-							<Redirect from='/profile*' to='/notFound'/>
-					</Switch>
+							<PrivateRoutes {...this.props} path='/profile/tweets' exact component={Tweets} />	
+							<Redirect from='/profile/*' to='/404'/>
+						</Switch>
 					</div>
 				</div>
 			</div>

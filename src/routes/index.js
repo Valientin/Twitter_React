@@ -21,7 +21,7 @@ const Routes = (props) => {
 					<PublicRoutes {...props} restricted={true} path='/login' exact component={Login} />
 					<PublicRoutes {...props} restricted={true} path='/register' exact component={Register} />
 					<PrivateRoutes {...props} restricted={true} path='/profile*' exact component={Profile} />
-					<PublicRoutes {...props} restricted={false} path='/notFound' exact component={ NotFound } />
+					<PublicRoutes {...props} restricted={false} path='/404' exact component={ NotFound } />
 					<PublicRoutes {...props} restricted={false} path='*' exact component={ NotFound } />
 				</Switch>
 			</Layout>
