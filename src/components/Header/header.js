@@ -34,12 +34,19 @@ export default class Header extends React.Component {
     
 
     componentDidMount(){
+        this.props.getProfileData(this.props.user.uid);
         document.addEventListener("click", this.documentClickHandler);
     } 
     
     componentWillUnmount() {
         document.removeEventListener("click", this.documentClickHandler);
     }
+
+    checkData(option, number = false){
+        const profileData = this.props.profileData;
+        
+		return profileData[option] ? profileData[option] : ''
+	}
     
     documentClickHandler = () => {
         this.setState({
@@ -139,8 +146,8 @@ export default class Header extends React.Component {
         this.state.showUserConfig ?
             <div className="user-config__list">
                 <div className="user-config__info">
-                    <h3>Валентин</h3>
-                    <span>@valikRD167</span>
+                    <h3>{`${this.checkData('name')} ${this.checkData('lastname')}`}</h3>
+                    <span>{`@${this.checkData('userName')}`}</span>
                 </div>
                 <div className="logout-wrapper" onClick={() => this.props.logout()}>
                     <Icons

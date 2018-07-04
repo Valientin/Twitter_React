@@ -18,9 +18,21 @@ const firebaseDB = firebase.database();
 const firebaseAuth = firebase.auth();
 const firebaseStorage = firebase.storage();
 
+const firebaseLooper = (snapshot) => {
+  const data = [];
+  snapshot.forEach((item) => {
+    data.push({
+      ...item.val(),
+      id:item.key
+    })
+  })
+  return data;
+}
+
 export {
   firebase,
   firebaseDB,
   firebaseAuth,
-  firebaseStorage
+  firebaseStorage,
+  firebaseLooper
 }

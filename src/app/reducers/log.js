@@ -1,12 +1,21 @@
-import { LOGIN_USER, REGISTER_USER, LOGOUT } from '../actions/actionTypes';
+import { 
+  LOGIN_USER, REGISTER_USER, LOGOUT,
+  GET_PROFILE_DATA_SUCCEEDED, GET_PROFILE_DATA_FAILED 
+} from '../actions/actionTypes';
 
 const initialState = {
   loginError: false,
-  registerError: false
+  registerError: false,
+  userProfileData: {},
+  message: ''
 }
 
 export function log(state = initialState, action) {
   switch (action.type) {
+    case GET_PROFILE_DATA_SUCCEEDED:
+      return {...state, userProfileData: action.payload};
+    case GET_PROFILE_DATA_FAILED:
+      return {...state, message: action.payload}
     case LOGIN_USER:
       return {...state, loginError: action.payload};
     case REGISTER_USER:
