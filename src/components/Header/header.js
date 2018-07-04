@@ -34,7 +34,9 @@ export default class Header extends React.Component {
     
 
     componentDidMount(){
-        this.props.getProfileData(this.props.user.uid);
+        if(this.props.user){
+            this.props.getProfileData(this.props.user.uid);
+        }
         document.addEventListener("click", this.documentClickHandler);
     } 
     
@@ -73,7 +75,6 @@ export default class Header extends React.Component {
         const newFormData = {
             ...this.state.formData
         }
-        console.log(elem);
         
         const newElem = {
             ...newFormData[elem.id]

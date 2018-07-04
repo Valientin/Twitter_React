@@ -52,7 +52,6 @@ class Login extends React.Component {
         const newFormData = {
             ...this.state.formData
         }
-        console.log(elem);
         const newElem = {
             ...newFormData[elem.id]
         }
