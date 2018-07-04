@@ -1,0 +1,21 @@
+.notFound-wrapper{
+	width:100%;
+	height: calc(100vh - 47px);
+	background-color:#1da1f2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.notFound-content{
+	
+	align-items: center;
+	h1,p{
+		color: white;
+		text-align: center;
+		padding: 10px 10px 10px 10px;
+	}
+	a:hover{
+		text-decoration: underline;
+		text-decoration-color: white;
+	}
+}

@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link, Switch } from 'react-router-dom';
+import { Link, Switch, Recirect } from 'react-router-dom';
+import { Redirect } from 'react-router'
 import PrivateRoutes from '../hoc/AuthRoute/privateRoute';
 import Tweets from '../Tweets';
 import Followers from '../Followers';
 import Followed from '../Followed';
+import NotFound from '../NotFound';
 
 import './profile.scss';
 import Icons from '../Icons';
@@ -62,7 +64,8 @@ class Profile extends React.Component {
 						<Switch>
 							<PrivateRoutes {...this.props} path='/profile/followers' exact component={Followers} />
 							<PrivateRoutes {...this.props} path='/profile/followed' exact component={Followed} />
-							<PrivateRoutes {...this.props} path='/profile' exact component={Tweets} />
+							<PrivateRoutes {...this.props} path='/profile' exact component={Tweets} />	
+							<Redirect from='/profile*' to='/notFound'/>
 					</Switch>
 					</div>
 				</div>
