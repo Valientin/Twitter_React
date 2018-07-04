@@ -1,8 +1,8 @@
 import { all } from 'redux-saga/effects';
-import { items } from './items';
+import { profile } from './profile';
 
 export default function* rootSaga() {
   yield all([
-    ...items
+    ...profile
   ])
 }
