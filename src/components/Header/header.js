@@ -3,35 +3,35 @@ import { Link } from 'react-router-dom';
 import FormField from '../FormFields';
 import './header.scss';
 import Icons from '../Icons';
-import { searching, home, tweet, direct } from './strings';
+import { searching, home, tweet, direct, validTweet } from './strings';
+
 
 export default class Header extends React.Component {
-    constructor(props){
-        super(props);
 
-        this.state = {
-            showUserConfig: false,
-            showTweetForm: false,
-            formData: {
-                tweet: {
-                    element: 'input',
-                    value: '',
-                    config: {
-                        name: 'tweet_input',
-                        type: 'tweet',
-                        className: 'tweet_input',
-                        placeholder: 'Что нового?'
-                    },
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    touched: false,
-                    validationMessage: ''
+    state = {
+        showUserConfig: false,
+        showTweetForm: false,
+        formData: {
+            tweet: {
+                element: 'textarea',
+                value: '',
+                config: {
+                    name: 'tweet_input',
+                    type: 'tweet',
+                    className: 'tweet_input',
+                    placeholder: 'Что нового?'
                 },
+                validation: {
+                    required: true,
+                    tweet:true
+                },
+                valid: false,
+                touched: false,
+                validationMessage: ''
             }
         }
     }
+    
 
     componentDidMount(){
         document.addEventListener("click", this.documentClickHandler);
@@ -66,27 +66,31 @@ export default class Header extends React.Component {
         const newFormData = {
             ...this.state.formData
         }
+        console.log(elem);
+        
         const newElem = {
             ...newFormData[elem.id]
         }
         newElem.value = elem.e.target.value;
+        
         if(elem.blur){
             let validData = this.validate(newElem);
             newElem.valid = validData[0];
             newElem.validationMessage = validData[1]
         }
-
+        
         newElem.touched = elem.blur;
         newFormData[elem.id] = newElem;
-
+        
         this.setState({
             formData: newFormData
         })
+
     }
 
     validate = (elem) => {
         let error = [true,''];
-
+        
         if(elem.validation.tweet){
             const valid = elem.value.length >= 5;
             const message = `${!valid ? validTweet : ''}`;
@@ -162,7 +166,7 @@ export default class Header extends React.Component {
                 <div className="tweet-form__form">
                     <div className="tweet-form__field" >
                         <FormField
-                            id={'input'}
+                            id={'tweet'}
                             formData={this.state.formData.tweet}
                             change={(elem) => this.updateForm(elem)}
                         />
