@@ -21,7 +21,7 @@ class Profile extends React.Component {
 					<div className="user-header">
 						<ul className="user-nav">
 							<li>
-								<NavLink to="/profile/tweets" className="user-nav__link">Твиты<span>5</span></NavLink>
+								<NavLink to="/profile" className="user-nav__link">Твиты<span>5</span></NavLink>
 							</li>
 							<li>
 								<NavLink to="/profile/followed" className="user-nav__link">Читаемые<span>5</span></NavLink>
@@ -50,9 +50,10 @@ class Profile extends React.Component {
 								<div className="user-info__image"></div>
 						</div>
 						<Switch>
+							
 							<PrivateRoutes {...this.props} path='/profile/followers' exact component={Followers} />
 							<PrivateRoutes {...this.props} path='/profile/followed' exact component={Followed} />
-							<PrivateRoutes {...this.props} path='/profile/tweets' exact component={Tweets} />	
+							<PrivateRoutes {...this.props} path='/profile' exact component={Tweets} />	
 							<Redirect from='/profile/*' to='/404'/>
 						</Switch>
 					</div>
