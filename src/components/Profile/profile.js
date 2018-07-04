@@ -24,10 +24,10 @@ class Profile extends React.Component {
 								<NavLink to="/profile/tweets" className="user-nav__link">Твиты<span>5</span></NavLink>
 							</li>
 							<li>
-								<NavLink to="/profile/folowed" className="user-nav__link">Читаемые<span>5</span></NavLink>
+								<NavLink to="/profile/followed" className="user-nav__link">Читаемые<span>5</span></NavLink>
 							</li>
 							<li>
-								<NavLink to="/profile/folowers" className="user-nav__link">Читатели<span>5</span></NavLink>
+								<NavLink to="/profile/followers" className="user-nav__link">Читатели<span>5</span></NavLink>
 							</li>
 						</ul>
 						<button className="user-header__change">Изменить профиль</button>
