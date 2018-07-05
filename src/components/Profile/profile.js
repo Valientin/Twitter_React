@@ -194,11 +194,14 @@ class Profile extends React.Component {
 
 	checkData(option, number = false){
 		const profileData = this.props.profileData;
-		if(number) {
-			return profileData[option] ? '0' : '0'
+		if(profileData[option]) {
+		 if(number) {return '0'};
+		 return profileData[option] ;
+		} else {
+		 if(number) {return '0'};
+		 return '';
 		}
-		return profileData[option] ? profileData[option] : ''
-	}
+	   }
 
 	showChangeWrapper = () => (
 		this.state.changeProfile ? 
