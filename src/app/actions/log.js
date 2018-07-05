@@ -1,4 +1,4 @@
-import { LOGIN_USER, REGISTER_USER, LOGOUT } from './actionTypes';
+import { LOGIN_USER, REGISTER_USER, LOGOUT, ADD_TWEET } from './actionTypes';
 import { firebaseAuth, firebaseDB } from '../firebase';
 
 export function loginUser(data) {

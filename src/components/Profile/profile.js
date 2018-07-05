@@ -195,7 +195,6 @@ class Profile extends React.Component {
 	checkData(option, number = false){
 		const profileData = this.props.profileData;
 		if(profileData[option]) {
-			
 			return profileData[option] ;
 		} else {
 			if(number) {return '0'};

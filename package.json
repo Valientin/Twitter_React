@@ -11,6 +11,7 @@
   "author": "Valientine",
   "license": "ISC",
   "dependencies": {
+    "autosize": "^4.0.2",
     "axios": "^0.18.0",
     "firebase": "^5.2.0",
     "moment": "^2.22.2",
