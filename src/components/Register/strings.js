@@ -1,8 +1,4 @@
-export const validEmail = 'Email должен быть валидный';
-export const validPassword = 'Количество символов не меньше 6';
-export const validRequire = 'Это поле обьязательное';
 export const validForm = 'Форма не валидная';
-export const validName = 'Количество символов не меньше 5';
 export const firstQuestion = 'Уже пользовался Твиттером?';
 export const secondQuestion = 'Пользовались Твиттером с помощью текстовых сообщений?';
 export const login = 'Войти прямо сейчас »';
