@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment'
 import FormField from '../FormFields';
 import './header.scss';
 import Icons from '../Icons';
 import { searching, home, tweet, direct, validTweet } from './strings';
-
 
 export default class Header extends React.Component {
 
@@ -36,15 +36,21 @@ export default class Header extends React.Component {
     componentDidMount(){
         this.props.getProfileData(this.props.user.uid);
         document.addEventListener("click", this.documentClickHandler);
+        
+
     } 
     
     componentWillUnmount() {
         document.removeEventListener("click", this.documentClickHandler);
     }
+    componentWillReceiveProps(nextProps){
+        nextProps.profile.addTweetError ? this.documentClickHandler()
+        : null
+    }
 
     checkData(option, number = false){
         const profileData = this.props.profileData;
-        
+        ;
 		return profileData[option] ? profileData[option] : ''
 	}
     
@@ -53,6 +59,7 @@ export default class Header extends React.Component {
             showUserConfig: false,
             showTweetForm: false
         });
+        this.clearForm('tweet')
     }
     dropdownClickHandler = (e) => {
         e.nativeEvent.stopImmediatePropagation();
@@ -68,12 +75,28 @@ export default class Header extends React.Component {
             showTweetForm: !this.state.showTweetForm
         })
     }
+    clearForm = (elem) => {
+        
+        const newFormData = {
+            ...this.state.formData
+        }
+        
+        
+        const newElem = {
+            ...newFormData[elem]
+        }
+        newElem.value = '';
+        newFormData[elem] = newElem;
+
+        this.setState({
+            formData: newFormData
+        })
+    }
 
     updateForm = (elem) => {
         const newFormData = {
             ...this.state.formData
         }
-        console.log(elem);
         
         const newElem = {
             ...newFormData[elem.id]
@@ -99,7 +122,7 @@ export default class Header extends React.Component {
         let error = [true,''];
         
         if(elem.validation.tweet){
-            const valid = elem.value.length >= 5;
+            const valid = elem.value.length <= 256;
             const message = `${!valid ? validTweet : ''}`;
             error = !valid ? [valid, message] : error
         }
@@ -120,8 +143,10 @@ export default class Header extends React.Component {
             let formIsValid = true;
 
             for(let key in this.state.formData){
-                dataToSubmit[key] = this.state.formData[key].value
+                dataToSubmit[key] = this.state.formData[key].value;
+                
             }
+            dataToSubmit.date = moment().format('MMMM Do YYYY, h:mm:ss');
             for(let key in this.state.formData){
                 formIsValid = this.state.formData[key].valid && formIsValid;
             }
@@ -131,7 +156,7 @@ export default class Header extends React.Component {
                 loading: true,
                 loginError: ''
                 })
-
+                this.props.addTweet(this.props.user.uid,dataToSubmit);
 
 
             } else {
@@ -161,6 +186,7 @@ export default class Header extends React.Component {
                 </div>
             </div>
         : null
+       
     )
     showTweetForm = () => (
         this.state.showTweetForm ?
@@ -178,6 +204,7 @@ export default class Header extends React.Component {
                             change={(elem) => this.updateForm(elem)}
                         />
                     </div>
+                    <button className="tweet-button" onClick={(e) => this.submitForm(e, true)}>{tweet}</button>
                 </div>
                 
             </div>
