@@ -161,7 +161,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 15px 50px;
+	padding: 15px 50px 50px;
 	margin: auto;
 	min-height: calc(100vh - 377px);
 }
@@ -185,8 +185,79 @@
 
 	&.change {
 		z-index: 4;
+		background: #e0f2fdb5;
+		border: none;
+		border-radius: 5px;
+		margin-right: 15px;
+
+		.user-info__username {
+			margin-bottom: 14px;
+			display: block;
+			color: #538bd0;
+		}
 	}
 
+	.input-wrapper {
+		flex-direction: column;
+		margin-bottom: 0;
+		position: relative;
+		margin-bottom: 7px;
+	}
+
+	.input-change {
+		width: 100%;
+		padding: 0 7px;
+		border-radius: 5px;
+		border: 1px solid #7ac8f7;
+		min-height: 35px;
+		background: #ffffffcf;
+		z-index: 4;
+		font-size: 15px;
+		color: #080808;
+
+		&__name {
+			font-size: 19px;
+			font-weight: 600;
+		}
+	}
+
+	.label-error {
+		font-size: 13px;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		color: transparent;
+		border-radius: 5px;
+		z-index: 3;
+		background: #f94444;
+	}
+
+	.user-change {
+		&__color {
+			margin-bottom: 10px;
+			position: relative;
+
+			.user-color {
+				position: absolute;
+				z-index: 5;
+			}
+		}
+
+		&__color-button {
+			width: 100%;
+			border-radius: 100px;
+			cursor: pointer;
+			font-size: 14px;
+			font-weight: bold;
+			background: #fff;
+			line-height: 20px;
+			padding: 6px 0;
+			outline: none;
+			white-space: nowrap;
+			color: #1da1f2;
+			border: 1px solid #1da1f2;
+		}
+	}
 
 	&__username {
 		font-size: 15px;
