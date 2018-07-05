@@ -3,20 +3,15 @@ import { Link } from 'react-router-dom';
 import FormField from '../FormFields';
 import './Register.scss';
 
-import { 
-    registerState, validEmail, validPassword, validRequire, validForm,
-    validName, firstQuestion, secondQuestion, login, register, registerB
-} from './strings';
+import { validate } from '../utils';
+
+import { registerState, validForm, firstQuestion, secondQuestion, login, register, registerB} from './strings';
 
 class Register extends React.Component {
     constructor(props){
         super(props);
 
         this.state = registerState;
-    }
-
-    componentDidMount(){
-        console.log(this.props)
     }
 
     updateForm = (elem) => {
@@ -28,7 +23,7 @@ class Register extends React.Component {
         }
         newElem.value = elem.e.target.value;
         if(elem.blur){
-            let validData = this.validate(newElem);
+            let validData = validate(newElem);
             newElem.valid = validData[0];
             newElem.validationMessage = validData[1]
         }
@@ -41,35 +36,6 @@ class Register extends React.Component {
         })
     }
 
-    validate = (elem) => {
-        let error = [true,''];
-
-        if(elem.validation.name){
-            const valid = elem.value.length >= 5;
-            const message = `${!valid ? validName : ''}`;
-            error = !valid ? [valid, message] : error
-        }
-
-        if(elem.validation.email){
-            const valid = /\S+@\S+\.\S+/.test(elem.value)
-            const message = `${!valid ? validEmail : ''}`;
-            error = !valid ? [valid, message] : error
-        }
-
-        if(elem.validation.password){
-            const valid = elem.value.length >= 6;
-            const message = `${!valid ? validPassword : ''}`;
-            error = !valid ? [valid, message] : error
-        }
-
-        if(elem.validation.required){
-            const valid = elem.value.trim() !== '';
-            const message = `${!valid ? validRequire : ''}`;
-            error = !valid ? [valid, message] : error
-        }
-
-        return error;
-    }
 
     submitForm = (e, type) => {
         e.preventDefault();
