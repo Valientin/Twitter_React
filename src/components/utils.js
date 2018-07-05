@@ -7,6 +7,12 @@ export function validate(elem){
         error = !valid ? [valid, message] : error
     }
 
+    if(elem.validation.tweet){
+        const valid = elem.value.length <= 256;
+        const message = `${!valid ? 'Не более 256 символов' : ''}`;
+        error = !valid ? [valid, message] : error
+    }
+
     if(elem.validation.email){
         const valid = /\S+@\S+\.\S+/.test(elem.value)
         const message = `${!valid ? 'Email должен быть валидный' : ''}`;
