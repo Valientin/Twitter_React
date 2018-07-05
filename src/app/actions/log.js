@@ -1,5 +1,16 @@
-import { LOGIN_USER, REGISTER_USER, LOGOUT, ADD_TWEET } from './actionTypes';
+import { LOGIN_USER, REGISTER_USER, LOGOUT, CHANGE_PROFILE_DATA} from './actionTypes';
 import { firebaseAuth, firebaseDB } from '../firebase';
+
+
+export function changeProfileData(id, data){
+
+
+    return {
+        type: CHANGE_PROFILE_DATA,
+        payload: request
+    }
+}
+
 
 export function loginUser(data) {
     const request = firebaseAuth.signInWithEmailAndPassword(

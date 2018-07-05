@@ -1,4 +1,4 @@
-import { ADD_TWEET} from '../actions/actionTypes';
+import { ADD_TWEET } from '../actions/actionTypes';
   
   const initialState = {
     addTweetError: false,

@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink, Switch } from 'react-router-dom';
 import moment from 'moment';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { TwitterPicker } from 'react-color';
 
 import PrivateRoutes from '../hoc/AuthRoute/privateRoute';
 import FormField from '../FormFields';
@@ -20,15 +21,9 @@ class Profile extends React.Component {
 
 		this.state = {
 			changeProfile: false,
-			userData: {
-				name: 'faf',
-				lastname: '',
-				userName: '',
-				about: '',
-				city: '',
-				internet: '',
-				dete: ''
-			},
+			changeUserError: false,
+			showColorPicker: false,
+			color: '#1da1f2',
 			formData: {
 				name: {
 					element: 'input',
@@ -36,7 +31,7 @@ class Profile extends React.Component {
 					config: {
 						name: 'name_input',
 						type: 'text',
-						className: 'input__change input-change__name',
+						className: 'input-change input-change__name',
 						placeholder: 'Имя'
 					},
 					validation: {
@@ -53,13 +48,13 @@ class Profile extends React.Component {
 					config: {
 						name: 'about_input',
 						type: 'text',
-						className: 'input__change input-change__about',
+						className: 'input-change input-change__about',
 						placeholder: 'О себе'
 					},
 					validation: {
 						required: false
 					},
-					valid: false,
+					valid: true,
 					touched: false,
 					validationMessage: ''
 				},
@@ -69,13 +64,13 @@ class Profile extends React.Component {
 					config: {
 						name: 'city_input',
 						type: 'text',
-						className: 'input__change input-change__city',
+						className: 'input-change input-change__city',
 						placeholder: 'Местоположение'
 					},
 					validation: {
 						required: false
 					},
-					valid: false,
+					valid: true,
 					touched: false,
 					validationMessage: ''
 				},
@@ -85,13 +80,13 @@ class Profile extends React.Component {
 					config: {
 						name: 'internet_input',
 						type: 'text',
-						className: 'input__change input-change__internet',
+						className: 'input-change input-change__internet',
 						placeholder: 'Ваш сайт'
 					},
 					validation: {
 						required: false
 					},
-					valid: false,
+					valid: true,
 					touched: false,
 					validationMessage: ''
 				},
@@ -101,24 +96,24 @@ class Profile extends React.Component {
 					config: {
 						name: 'date_input',
 						type: 'text',
-						className: 'input__change input-change__date',
+						className: 'input-change input-change__date',
 						placeholder: 'Дата рождения (DD/MM/YYYY)'
 					},
 					validation: {
-						required: true,
+						required: false,
 						date: true
 					},
-					valid: false,
+					valid: true,
 					touched: false,
 					validationMessage: ''
 				}
 			}
 		}
 	}
-	
 
 	componentDidMount(){
 		this.props.getProfileData(this.props.user.uid);
+		document.addEventListener("click", this.documentClickHandler);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -126,12 +121,37 @@ class Profile extends React.Component {
 		for(let key in nextProps.profileData){
 			if(this.state.formData[key]){
 				const newData = nextProps.profileData[key];
-				this.updateForm({id: key, value: newData});
+				this.updateForm({id: key, value: newData, blur: true});
 			}
 		}
 		
 	}
+
+	componentWillUnmount() {
+        document.removeEventListener("click", this.documentClickHandler);
+	}
 	
+	documentClickHandler = () => {
+        this.setState({
+            showColorPicker: false
+        });
+    }
+	
+
+	dropdownClickHandler = (e) => {
+        e.nativeEvent.stopImmediatePropagation();
+	}
+	
+	toggleColorPicker = (e) => {
+		this.dropdownClickHandler(e)
+		this.setState({
+			showColorPicker: !this.state.showColorPicker
+		})
+	}
+
+	handleChangeColor = (color) => {
+		this.setState({color: color.hex})
+	}
 
 	updateForm = (elem) => {
         const newFormData = {
@@ -157,29 +177,29 @@ class Profile extends React.Component {
 
 
     submitForm = (e, type) => {
-        e.preventDefault();
+		e.preventDefault();
         if(type !== null){
             let dataToSubmit = {};
             let formIsValid = true;
 
             for(let key in this.state.formData){
-                dataToSubmit[key] = this.state.formData[key].value
+				dataToSubmit[key] = this.state.formData[key].value
+				dataToSubmit.color = this.state.color;
             }
             for(let key in this.state.formData){
-                formIsValid = this.state.formData[key].valid && formIsValid;
+				formIsValid = this.state.formData[key].valid && formIsValid;
             }
 
             if(formIsValid){
                 this.setState({
                 loading: true,
-                registerError: ''
+				changeUserError: false,
+				changeProfile: false
             })
-
-                console.log(dataToSubmit);
-
+                console.log(dataToSubmit)
             } else {
                 this.setState({
-                    registerError: validForm
+                    changeUserError: true
                 })
             }
         }
@@ -195,13 +215,24 @@ class Profile extends React.Component {
 	checkData(option, number = false){
 		const profileData = this.props.profileData;
 		if(profileData[option]) {
-		 if(number) {return '0'};
-		 return profileData[option] ;
+		 	if(number) {return '0'};
+		 	return profileData[option] ;
 		} else {
-		 if(number) {return '0'};
-		 return '';
+		 	if(number) {return '0'};
+		 	return '';
 		}
-	   }
+	}
+
+	showColorPicker = () => (
+        this.state.showColorPicker ?
+            <div className="user-config__list" >
+               <TwitterPicker
+					color={this.state.color}
+					onChangeComplete={this.handleChangeColor}
+			   />
+            </div>
+        : null
+	)
 
 	showChangeWrapper = () => (
 		this.state.changeProfile ? 
@@ -213,7 +244,7 @@ class Profile extends React.Component {
 		this.state.changeProfile ? 
 			<div className="user-header__block-change">
 				<button className="user-header__button user-header__annulment" onClick={() => this.toggleChangeProfile()}>Отмена</button>
-				<button className="user-header__button user-header__save-change" onClick={() => this.toggleChangeProfile()}>Сохранить</button>
+				<button className="user-header__button user-header__save-change" onClick={(e) => this.submitForm(e, true)}>Сохранить</button>
 			</div>
 		: 
 			<button className="user-header__change" onClick={() => this.toggleChangeProfile()}>Изменить профиль</button>
@@ -240,34 +271,41 @@ class Profile extends React.Component {
 			</div>
 		: 
 			<div className="user-info change">
-				<FormField
-					id={'name'}
-					formData={this.state.formData.name}
-					change={(elem) => this.updateForm(elem)}
-				/>
-				<FormField
-					id={'about'}
-					formData={this.state.formData.about}
-					change={(elem) => this.updateForm(elem)}
-				/>
-				<FormField
-					id={'city'}
-					formData={this.state.formData.city}
-					change={(elem) => this.updateForm(elem)}
-				/>
-				<FormField
-					id={'internet'}
-					formData={this.state.formData.internet}
-					change={(elem) => this.updateForm(elem)}
-				/>
-				<div className="user-change__color">
-					<button className="user-change__color-button">Цвет темы</button>
-				</div>
-				<FormField
-					id={'date'}
-					formData={this.state.formData.date}
-					change={(elem) => this.updateForm(elem)}
-				/>
+				<form onSubmit={(e) => this.submitForm(e, null)} className="user-change__form">
+					<FormField
+						id={'name'}
+						formData={this.state.formData.name}
+						change={(elem) => this.updateForm(elem)}
+					/>
+					<span className="user-info__username">{`@${this.checkData('userName')}`}</span>
+					<FormField
+						id={'about'}
+						formData={this.state.formData.about}
+						change={(elem) => this.updateForm(elem)}
+					/>
+					<FormField
+						id={'city'}
+						formData={this.state.formData.city}
+						change={(elem) => this.updateForm(elem)}
+					/>
+					<FormField
+						id={'internet'}
+						formData={this.state.formData.internet}
+						change={(elem) => this.updateForm(elem)}
+					/>
+					<div className="user-change__color">
+						<button className="user-change__color-button" onClick={(e) => this.toggleColorPicker(e)}>Цвет темы</button>
+						<div className="user-color" onClick={(e) => this.dropdownClickHandler(e)}>
+							{this.showColorPicker()}
+						</div>
+					</div>
+					<FormField
+						id={'date'}
+						formData={this.state.formData.date}
+						change={(elem) => this.updateForm(elem)}
+					/>
+					<div className="user-info__image"></div>
+				</form>
 			</div>
 
 	)
