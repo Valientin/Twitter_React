@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AddTweet from '../addTweet';
+import AddTweet from './AddTweet';
 import './header.scss';
-import Icons from '../Icons';
+import Icons from '../widgets/Icons';
 import { searching, home, tweet, direct, validTweet } from './strings';
 import { checkData } from '../utils';
 

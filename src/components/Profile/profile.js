@@ -5,11 +5,11 @@ import { Redirect } from 'react-router';
 import { TwitterPicker } from 'react-color';
 
 import PrivateRoutes from '../hoc/AuthRoute/privateRoute';
-import FormField from '../FormFields';
-import Icons from '../Icons';
-import Tweets from '../Tweets';
-import Followers from '../Followers';
-import Followed from '../Followed';
+import FormField from '../widgets/FormFields';
+import Icons from '../widgets/Icons';
+import Tweets from './Tweets';
+import Followers from './Followers';
+import Followed from './Followed';
 
 import { validate, checkData, profileState } from '../utils';
 import './profile.scss';
