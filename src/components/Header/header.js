@@ -4,6 +4,7 @@ import AddTweet from '../addTweet';
 import './header.scss';
 import Icons from '../Icons';
 import { searching, home, tweet, direct, validTweet } from './strings';
+import { checkData } from '../utils';
 
 export default class Header extends React.Component {
 
@@ -30,12 +31,6 @@ export default class Header extends React.Component {
         : null
     }
 
-    checkData(option, number = false){
-        const profileData = this.props.profileData;
-        ;
-		return profileData[option] ? profileData[option] : ''
-	}
-    
     documentClickHandler = () => {
         this.setState({
             showUserConfig: false,
@@ -62,14 +57,14 @@ export default class Header extends React.Component {
         this.state.showUserConfig ?
             <div className="user-config__list">
                 <div className="user-config__info">
-                    <h3>{`${this.checkData('name')} ${this.checkData('lastname')}`}</h3>
-                    <span>{`@${this.checkData('userName')}`}</span>
+                    <h3>{`${checkData(this.props.profileData,'name')} ${checkData(this.props.profileData,'lastname')}`}</h3>
+                    <span>{`@${checkData(this.props.profileData,'userName')}`}</span>
                 </div>
-                <div className="logout-wrapper" onClick={() => this.props.logout()}>
+                <div className="logout-wrapper" onClick={() => this.props.logout()} >
                     <Icons
                         icon='logout' 
                         size="20px" 
-                        color="#1da1f2"
+                        color={checkData(this.props.profileData,'color')}
                         className='outline'
                         style={{margin: '0 12px 0 0'}}
                     />
@@ -119,7 +114,7 @@ export default class Header extends React.Component {
                         </li>
                     </ul>
                     <div className="logo">
-                        <Icons icon='twitter' size="20px" color="#1da1f2"/>
+                        <Icons icon='twitter' size="20px" color={checkData(this.props.profileData,'color')}/>
                     </div>
                     <div className="nav-right">
                         <div className="user-config" onClick={this.dropdownClickHandler}>
@@ -132,7 +127,12 @@ export default class Header extends React.Component {
                             {this.showUserConfig()}
                         </div>
                         <div onClick={this.dropdownClickHandler}>
-                        <button className="tweet-button" onClick={() => this.toggleTweetForm()}>{tweet}</button>
+                            <button className="tweet-button" 
+                                onClick={() => this.toggleTweetForm()}
+                                style={{background: checkData(this.props.profileData,'color')}}
+                            >
+                                {tweet}
+                            </button>
                         </div>
                         
                     </div>

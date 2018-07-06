@@ -43,23 +43,24 @@
 			
 		}	
 	}
-}
-.tweet-button{
-	border-radius: 100px;
-	margin-bottom: 10px;
-	cursor: pointer;
-	font-size: 14px;
-	font-weight: 600;
-	padding: 7px 16px;
-	background: #1da1f2;
-	border: none;
-	color: #fff;
-	outline: none;
-
-	&:hover {
-		background: #1f8acc;
+	.tweet-button{
+		border-radius: 100px;
+		margin-bottom: 10px;
+		cursor: pointer;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 7px 16px;
+		background: #1da1f2;
+		border: none;
+		color: #fff;
+		outline: none;
+	
+		&:hover {
+			background: #1f8acc;
+		}
 	}
 }
+
 .tweet-form-wrapper{
 	top:0px;
 	position: fixed;

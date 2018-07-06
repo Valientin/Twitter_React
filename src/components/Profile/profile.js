@@ -11,7 +11,7 @@ import Tweets from '../Tweets';
 import Followers from '../Followers';
 import Followed from '../Followed';
 
-import { validate } from '../utils';
+import { validate, checkData, profileState } from '../utils';
 import './profile.scss';
 
 
@@ -19,96 +19,7 @@ class Profile extends React.Component {
 	constructor(props){
 		super(props);
 
-		this.state = {
-			changeProfile: false,
-			changeUserError: false,
-			showColorPicker: false,
-			color: '#1da1f2',
-			formData: {
-				name: {
-					element: 'input',
-					value: '',
-					config: {
-						name: 'name_input',
-						type: 'text',
-						className: 'input-change input-change__name',
-						placeholder: 'Имя'
-					},
-					validation: {
-						required: true,
-						name: true
-					},
-					valid: false,
-					touched: false,
-					validationMessage: ''
-				},
-				about: {
-					element: 'input',
-					value: '',
-					config: {
-						name: 'about_input',
-						type: 'text',
-						className: 'input-change input-change__about',
-						placeholder: 'О себе'
-					},
-					validation: {
-						required: false
-					},
-					valid: true,
-					touched: false,
-					validationMessage: ''
-				},
-				city: {
-					element: 'input',
-					value: '',
-					config: {
-						name: 'city_input',
-						type: 'text',
-						className: 'input-change input-change__city',
-						placeholder: 'Местоположение'
-					},
-					validation: {
-						required: false
-					},
-					valid: true,
-					touched: false,
-					validationMessage: ''
-				},
-				internet: {
-					element: 'input',
-					value: '',
-					config: {
-						name: 'internet_input',
-						type: 'text',
-						className: 'input-change input-change__internet',
-						placeholder: 'Ваш сайт'
-					},
-					validation: {
-						required: false
-					},
-					valid: true,
-					touched: false,
-					validationMessage: ''
-				},
-				date: {
-					element: 'input',
-					value: '',
-					config: {
-						name: 'date_input',
-						type: 'text',
-						className: 'input-change input-change__date',
-						placeholder: 'Дата рождения (DD/MM/YYYY)'
-					},
-					validation: {
-						required: false,
-						date: true
-					},
-					valid: true,
-					touched: false,
-					validationMessage: ''
-				}
-			}
-		}
+		this.state = profileState;
 	}
 
 	componentDidMount(){
@@ -217,31 +128,6 @@ class Profile extends React.Component {
 			changeProfile: !this.state.changeProfile
 		})
 	}
-
-
-	checkData(option, number = false){ 
-		const profileData = this.props.profileData;
-		if(number){
-			return profileData[option] ? Object.keys(profileData[option]).length : '0'
-		}
-		if(option === 'about'){
-			return profileData[option] ? `О себе: ${profileData[option]}` : ''
-		}
-		if(option === 'city'){
-			return profileData[option] ? `Местоположение: ${profileData[option]}` : ''
-		}
-		if(option === 'internet'){
-			return profileData[option] ? `Сайт: ${profileData[option]}` : ''
-		}
-		if(option === 'date'){
-			return profileData[option] ? `Дата рождения: ${profileData[option]}` : ''
-		}
-		if(option === 'color'){
-			return profileData[option] ? profileData[option] : this.state.color
-		}
-		return profileData[option] ? profileData[option] : ''
-	}
-
 	showColorPicker = () => (
         this.state.showColorPicker ?
             <div className="user-config__list" >
@@ -274,11 +160,11 @@ class Profile extends React.Component {
 		!this.state.changeProfile ?
 			<div className="user-info">
 				<h3>{this.props.profileData.name ? this.props.profileData.name : ''}</h3>
-				<p className="user-info__data username">{`@${this.checkData('userName')}`}</p>
-				<p className="user-info__data about">{this.checkData('about')}</p>
-				<p className="user-info__data city">{this.checkData('city')}</p>
-				<p className="user-info__data internet">{this.checkData('internet')}</p>
-				<p className="user-info__data date">{this.checkData('date')}</p>
+				<p className="user-info__data username">{`@${checkData(this.props.profileData,'userName')}`}</p>
+				<p className="user-info__data about">{checkData(this.props.profileData, 'about')}</p>
+				<p className="user-info__data city">{checkData(this.props.profileData, 'city')}</p>
+				<p className="user-info__data internet">{checkData(this.props.profileData, 'internet')}</p>
+				<p className="user-info__data date">{checkData(this.props.profileData, 'date')}</p>
 				<div className="user-info__calendar">
 					<span><Icons 
 						icon='calendar' 
@@ -290,7 +176,9 @@ class Profile extends React.Component {
 						{`Регистрация: ${moment(this.props.user.metadata.creationTime).format("DD MMM YYYY")}`}
 					</span>
 				</div>
-				<div className="user-info__image" style={{background: this.checkData('color')}}></div>
+				<div className="user-info__image" style={{
+					background: checkData(this.props.profileData, 'color', false, this.state.color)
+					}}></div>
 			</div>
 		: 
 			<div className="user-info change">
@@ -300,7 +188,7 @@ class Profile extends React.Component {
 						formData={this.state.formData.name}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<span className="user-info__username">{`@${this.checkData('userName')}`}</span>
+					<span className="user-info__username">{`@${checkData(this.props.profileData,'userName')}`}</span>
 					<FormField
 						id={'about'}
 						formData={this.state.formData.about}
@@ -327,7 +215,9 @@ class Profile extends React.Component {
 						formData={this.state.formData.date}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<div className="user-info__image" style={{background: this.checkData('color')}}></div>
+					<div className="user-info__image" style={{
+						background: checkData(this.props.profileData,'color',false,this.state.color)
+						}}></div>
 				</form>
 			</div>
 
@@ -345,13 +235,13 @@ class Profile extends React.Component {
 					<div className="user-header">
 						<ul className="user-nav">
 							<li>
-								<NavLink to="/profile/" exact className="user-nav__link">Твиты<span>{this.checkData('tweets',true)}</span></NavLink>
+								<NavLink to="/profile/" exact className="user-nav__link">Твиты<span>{checkData(this.props.profileData,'tweets',true)}</span></NavLink>
 							</li>
 							<li>
-								<NavLink to="/profile/followed" className="user-nav__link">Читаемые<span>{this.checkData('followed',true)}</span></NavLink>
+								<NavLink to="/profile/followed" className="user-nav__link">Читаемые<span>{checkData(this.props.profileData,'followed',true)}</span></NavLink>
 							</li>
 							<li>
-								<NavLink to="/profile/followers" className="user-nav__link">Читатели<span>{this.checkData('followers',true)}</span></NavLink>
+								<NavLink to="/profile/followers" className="user-nav__link">Читатели<span>{checkData(this.props.profileData,'followers',true)}</span></NavLink>
 							</li>
 						</ul>
 						{this.showChangeButton()}
