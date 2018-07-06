@@ -105,7 +105,7 @@ class Login extends React.Component {
         if(nextProps.log.loginError){
             this.setState({
                 loading: false,
-                loginError: 'Пользователь не найден. Повторите попытку!'
+                loginError: 'Повторите попытку!'
             })
         } 
     }
