@@ -224,6 +224,18 @@ class Profile extends React.Component {
 		if(number){
 			return profileData[option] ? Object.keys(profileData[option]).length : '0'
 		}
+		if(option === 'about'){
+			return profileData[option] ? `О себе: ${profileData[option]}` : ''
+		}
+		if(option === 'city'){
+			return profileData[option] ? `Местоположение: ${profileData[option]}` : ''
+		}
+		if(option === 'internet'){
+			return profileData[option] ? `Сайт: ${profileData[option]}` : ''
+		}
+		if(option === 'date'){
+			return profileData[option] ? `Дата рождения: ${profileData[option]}` : ''
+		}
 		if(option === 'color'){
 			return profileData[option] ? profileData[option] : this.state.color
 		}
@@ -262,11 +274,11 @@ class Profile extends React.Component {
 		!this.state.changeProfile ?
 			<div className="user-info">
 				<h3>{this.props.profileData.name ? this.props.profileData.name : ''}</h3>
-				<span className="user-info__username">{`@${this.checkData('userName')}`}</span>
-				<span className="user-info__username">{this.checkData('about')}</span>
-				<span className="user-info__username">{this.checkData('city')}</span>
-				<span className="user-info__username">{this.checkData('internet')}</span>
-				<span className="user-info__username">{this.checkData('date')}</span>
+				<p className="user-info__data username">{`@${this.checkData('userName')}`}</p>
+				<p className="user-info__data about">{this.checkData('about')}</p>
+				<p className="user-info__data city">{this.checkData('city')}</p>
+				<p className="user-info__data internet">{this.checkData('internet')}</p>
+				<p className="user-info__data date">{this.checkData('date')}</p>
 				<div className="user-info__calendar">
 					<span><Icons 
 						icon='calendar' 
@@ -327,7 +339,7 @@ class Profile extends React.Component {
 		return(
 			<div className="root-wrapper-user">
 				{this.showChangeWrapper()}
-				<div className="user-wrapper" style={{background: this.checkData('color')}}>
+				<div className="user-wrapper">
 				</div>
 				<div className="user-header-wrapper">
 					<div className="user-header">

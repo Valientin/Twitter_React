@@ -261,10 +261,17 @@
 		}
 	}
 
-	&__username {
-		font-size: 15px;
+	&__data {
 		margin-top: 5px;
+		font-weight: 600;
+		font-size: 13px;
 		color: #7a7a7a;
+
+		&.username {
+			margin: 3px 0 10px;
+			font-size: 15px;
+			font-weight: 400;
+		}
 	}
 	
 
