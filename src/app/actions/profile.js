@@ -1,21 +1,53 @@
 import { ADD_TWEET } from './actionTypes';
-import { firebaseAuth, firebaseDB, firebaseStorage, firebaseStorage } from '../firebase';
+import { firebaseAuth, firebaseDB, firebaseStorage } from '../firebase';
+
+function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() +  + s4() +  + s4() +  + s4() +  + s4() + s4() + s4();
+  }
+
 
 
 export function addTweet(id,data) {
-    let key = firebaseDB.ref(`users/${id}/tweets`).push().getKey();
-    console.log(data)
-    var file = data.fileObjects[0] 
-    firebaseStorage.ref('img/').put(file).then(function(snapshot) {
-        console.log('Uploaded a blob or file!');
-    });
-    const request = firebaseDB.ref(`users/${id}/tweets/${key}`).set(
+    let UidKey = firebaseDB.ref(`users/${id}/tweets`).push().getKey();
+    let files = data.fileObjects;
+    let isReady = false; 
+    const FilesUrl = []
+    for (let key in files){
+        let randomFileName = guid();
+        let file = files[key];
+        firebaseStorage.ref(`img/userMedia/${randomFileName}`).put(file).then(function(snapshot) {
+            firebaseStorage.ref('img/userMedia/')
+            .child(randomFileName).getDownloadURL()
+            .then( url => {
+                firebaseDB.ref(`users/${id}/tweets/${UidKey}/files/${key}`).set(
+                    {
+                        url: url,
+                    }
+                )
+
+            })
+         });
+           
+
+    }
+    
+   // firebaseStorage.ref('img/').put(file).then(function(snapshot) {
+   //     console.log('Uploaded a blob or file!');
+   // });
+    
+    const request = firebaseDB.ref(`users/${id}/tweets/${UidKey}`).set(
         {
             text: data.tweet,
             date:  data.date,
-            commnets: ' '
+            commnets: ' ',
         }
     ).then( ()=> {
+        console.log('Uploaded a blob or file!');
         return {
             type: ADD_TWEET,
             payload: true
@@ -24,7 +56,8 @@ export function addTweet(id,data) {
         return {
             type: ADD_TWEET,
             payload: 'error'
-         }
+        }
     })
     return request;
+    
 }

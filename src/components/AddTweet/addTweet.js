@@ -48,15 +48,16 @@ export default class addTweet extends React.Component {
         
         for (let key in event.target.files){
             if (key !== 'item' && key !== 'length' ){ 
-                fileObjects[key] = event.target.files[key]  
-                files.push(URL.createObjectURL(event.target.files[key]))
+                fileObjects[key] = event.target.files[key]
+                  
+                files.push({url: URL.createObjectURL(event.target.files[key]),show: false })
             }
         }
         this.setState({
           files,
           fileObjects
         }, () => {
-            //console.log(this.state.fileObjects)
+            //console.log(this.state)
         })
       }
 
@@ -114,7 +115,6 @@ export default class addTweet extends React.Component {
                 
             }
             dataToSubmit.date = moment().format('MMMM Do YYYY, h:mm:ss');
-            console.log(this.state.fileObjects)
             dataToSubmit.fileObjects = this.state.fileObjects
             for(let key in this.state.formData){
                 formIsValid = this.state.formData[key].valid && formIsValid;
@@ -139,6 +139,50 @@ export default class addTweet extends React.Component {
     dropdownClickHandler = (e) => {
         e.nativeEvent.stopImmediatePropagation();
     }
+    deleteFile = (file) =>{
+        const newState = []
+        this.state.files.map((item) =>{
+            if (item != file){
+                newState.push(item)
+            }
+
+        })
+        this.setState({
+            files: newState
+          })
+    }
+    showFull = (key) =>{
+        const newData = {
+            ...this.state.files
+        }
+        const newDataFile = {
+            ...newData[key]
+        }
+        console.log(newDataFile)
+        newDataFile.show = true;
+        newData[key] = newDataFile;
+        let arr = []
+        Object.keys(newData).forEach(item => {
+            arr.push(newData[item])
+        })
+        this.setState({
+            files: arr
+        },()=>{
+            console.log(this.state.files)
+        })
+        //let newFile={}
+        //this.state.files.map((item) =>{
+            //if (item == file){
+              //  newFile.show = true;
+               // newFile.url = item;
+               // 
+                //this.setState({
+                    //files: newFile
+                  //})
+            //}
+
+        //})
+    }
 	render(){
 		return(
             <div className="tweet-form" onClick={this.dropdownClickHandler} >
@@ -157,11 +201,23 @@ export default class addTweet extends React.Component {
                             <ImageUploader handleChange={(e) => this.handleChange(e)} files = {this.state.files} />
                         </div>
                         <div className="preview">
-
+                            {this.state.files.map((item,i) =>(
+                                <div className="preview-image" key={i}>
+                                    <img className="image_preview"  src ={item.url} width="120px" height="100px" onClick={() => this.showFull(i)} ></img>
+                                    {item.show ?
+                                        
+                                        <div className="image_preview-big-wrapper"><div className="image_preview-big-container"></div></div>
+                                    : null}
+                                    <button className="tweet-button-delete" onClick={() => this.deleteFile(item)}>x</button>
+                                </div>
+                                
+                                ))
+                            }
                         </div>
                     </div>
-
-                    <button className="tweet-button" onClick={(e) => this.submitForm(e, true)}>{tweet}</button>
+                        <button className="tweet-button" onClick={(e) => this.submitForm(e, true)}>{tweet}</button>
+                   
+                    
                 </div>
                 
             </div>
