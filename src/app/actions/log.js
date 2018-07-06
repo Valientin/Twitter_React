@@ -3,7 +3,11 @@ import { firebaseAuth, firebaseDB } from '../firebase';
 
 
 export function changeProfileData(id, data){
-
+    const request = firebaseDB.ref('users/' + id).update({
+        ...data
+    }).then(() => {
+        return data;
+    }).catch(e => { console.log(e.message )})
 
     return {
         type: CHANGE_PROFILE_DATA,

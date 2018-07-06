@@ -117,14 +117,8 @@ class Profile extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps.profileData)
-		for(let key in nextProps.profileData){
-			if(this.state.formData[key]){
-				const newData = nextProps.profileData[key];
-				this.updateForm({id: key, value: newData, blur: true});
-			}
-		}
-		
+		this.updateForm(nextProps.profileData, true);
+		this.setState({color: nextProps.profileData.color})
 	}
 
 	componentWillUnmount() {
@@ -153,26 +147,38 @@ class Profile extends React.Component {
 		this.setState({color: color.hex})
 	}
 
-	updateForm = (elem) => {
+	updateForm = (elem, sprey = false) => {
         const newFormData = {
             ...this.state.formData
-        }
-        const newElem = {
-            ...newFormData[elem.id]
-        }
-        elem.e ? newElem.value = elem.e.target.value: newElem.value = elem.value;
-        if(elem.blur){
-            let validData = validate(newElem);
-            newElem.valid = validData[0];
-            newElem.validationMessage = validData[1]
-        }
+		}
+		if(sprey){
+			for(let key in elem){
+				if(newFormData[key]){
+					if(key === 'name'){
+						newFormData[key].valid = true;
+					}
+					newFormData[key].value = elem[key];
+				}
+			}
+		} else {
 
-        newElem.touched = elem.blur;
-        newFormData[elem.id] = newElem;
-
+			const newElem = {
+				...newFormData[elem.id]
+			}
+			elem.e ? newElem.value = elem.e.target.value: newElem.value = elem.value;
+			if(elem.blur){
+				let validData = validate(newElem);
+				newElem.valid = validData[0];
+				newElem.validationMessage = validData[1]
+			}
+			
+			newElem.touched = elem.blur;
+			newFormData[elem.id] = newElem;
+		}
+		
         this.setState({
             formData: newFormData
-        })
+		})
     }
 
 
@@ -195,8 +201,9 @@ class Profile extends React.Component {
                 loading: true,
 				changeUserError: false,
 				changeProfile: false
-            })
-                console.log(dataToSubmit)
+			})
+				this.props.changeProfileData(this.props.user.uid, dataToSubmit);
+				this.props.getProfileData(this.props.user.uid);
             } else {
                 this.setState({
                     changeUserError: true
@@ -212,15 +219,15 @@ class Profile extends React.Component {
 	}
 
 
-	checkData(option, number = false){
+	checkData(option, number = false){ 
 		const profileData = this.props.profileData;
-		if(profileData[option]) {
-		 	if(number) {return '0'};
-		 	return profileData[option] ;
-		} else {
-		 	if(number) {return '0'};
-		 	return '';
+		if(number){
+			return profileData[option] ? Object.keys(profileData[option]).length : '0'
 		}
+		if(option === 'color'){
+			return profileData[option] ? profileData[option] : this.state.color
+		}
+		return profileData[option] ? profileData[option] : ''
 	}
 
 	showColorPicker = () => (
@@ -254,8 +261,12 @@ class Profile extends React.Component {
 	showUserInfo = () => (
 		!this.state.changeProfile ?
 			<div className="user-info">
-				<h3>{`${this.checkData('name')} ${this.checkData('lastname')}`}</h3>
+				<h3>{this.props.profileData.name ? this.props.profileData.name : ''}</h3>
 				<span className="user-info__username">{`@${this.checkData('userName')}`}</span>
+				<span className="user-info__username">{this.checkData('about')}</span>
+				<span className="user-info__username">{this.checkData('city')}</span>
+				<span className="user-info__username">{this.checkData('internet')}</span>
+				<span className="user-info__username">{this.checkData('date')}</span>
 				<div className="user-info__calendar">
 					<span><Icons 
 						icon='calendar' 
@@ -267,7 +278,7 @@ class Profile extends React.Component {
 						{`Регистрация: ${moment(this.props.user.metadata.creationTime).format("DD MMM YYYY")}`}
 					</span>
 				</div>
-				<div className="user-info__image"></div>
+				<div className="user-info__image" style={{background: this.checkData('color')}}></div>
 			</div>
 		: 
 			<div className="user-info change">
@@ -304,7 +315,7 @@ class Profile extends React.Component {
 						formData={this.state.formData.date}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<div className="user-info__image"></div>
+					<div className="user-info__image" style={{background: this.checkData('color')}}></div>
 				</form>
 			</div>
 
@@ -316,7 +327,7 @@ class Profile extends React.Component {
 		return(
 			<div className="root-wrapper-user">
 				{this.showChangeWrapper()}
-				<div className="user-wrapper" >
+				<div className="user-wrapper" style={{background: this.checkData('color')}}>
 				</div>
 				<div className="user-header-wrapper">
 					<div className="user-header">
