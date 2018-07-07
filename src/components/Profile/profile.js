@@ -7,9 +7,9 @@ import { TwitterPicker } from 'react-color';
 import PrivateRoutes from '../hoc/AuthRoute/privateRoute';
 import FormField from '../widgets/FormFields';
 import Icons from '../widgets/Icons';
-import Tweets from './Tweets';
-import Followers from './Followers';
-import Followed from './Followed';
+import Tweets from '../Tweets';
+import Followers from '../Followers';
+import Followed from '../Followed';
 
 import { validate, checkData, profileState } from '../utils';
 import './profile.scss';
@@ -130,7 +130,7 @@ class Profile extends React.Component {
 	}
 	showColorPicker = () => (
         this.state.showColorPicker ?
-            <div className="user-config__list" >
+            <div className="profile-config__list" >
                <TwitterPicker
 					color={this.state.color}
 					onChangeComplete={this.handleChangeColor}
@@ -141,31 +141,36 @@ class Profile extends React.Component {
 
 	showChangeWrapper = () => (
 		this.state.changeProfile ? 
-			<div className="user-white__wrapper"></div>
+			<div className="profile-white__wrapper"></div>
 		: null
 	)
 
 	showChangeButton = () => (
 		this.state.changeProfile ? 
-			<div className="user-header__block-change">
-				<button className="user-header__button user-header__annulment" onClick={() => this.toggleChangeProfile()}>Отмена</button>
-				<button className="user-header__button user-header__save-change" onClick={(e) => this.submitForm(e, true)}>Сохранить</button>
+			<div className="profile-header__block-change">
+				<button className="profile-header__button profile-header__annulment" onClick={() => this.toggleChangeProfile()}>Отмена</button>
+				<button className="profile-header__button profile-header__save-change" onClick={(e) => this.submitForm(e, true)}>Сохранить</button>
 			</div>
 		: 
-			<button className="user-header__change" onClick={() => this.toggleChangeProfile()}>Изменить профиль</button>
-					
+			<button className="profile-header__change" onClick={() => this.toggleChangeProfile()}>Изменить профиль</button>		
+	)
+
+	showPersonalData = (option) => ( 
+		this.props.profileData[option] ?
+			<p className={`profile-info__data ${option}`}>{checkData(this.props.profileData, option)}</p>
+		: ''
 	)
 
 	showUserInfo = () => (
 		!this.state.changeProfile ?
-			<div className="user-info">
+			<div className="profile-info">
 				<h3>{this.props.profileData.name ? this.props.profileData.name : ''}</h3>
-				<p className="user-info__data username">{`@${checkData(this.props.profileData,'userName')}`}</p>
-				<p className="user-info__data about">{checkData(this.props.profileData, 'about')}</p>
-				<p className="user-info__data city">{checkData(this.props.profileData, 'city')}</p>
-				<p className="user-info__data internet">{checkData(this.props.profileData, 'internet')}</p>
-				<p className="user-info__data date">{checkData(this.props.profileData, 'date')}</p>
-				<div className="user-info__calendar">
+				<p className="profile-info__data username">{`@${checkData(this.props.profileData,'userName')}`}</p>
+				{this.showPersonalData('about')}
+				{this.showPersonalData('city')}
+				{this.showPersonalData('internet')}
+				{this.showPersonalData('date')}
+				<div className="profile-info__calendar">
 					<span><Icons 
 						icon='calendar' 
 						size="15px" 
@@ -176,19 +181,19 @@ class Profile extends React.Component {
 						{`Регистрация: ${moment(this.props.user.metadata.creationTime).format("DD MMM YYYY")}`}
 					</span>
 				</div>
-				<div className="user-info__image" style={{
+				<div className="profile-info__image" style={{
 					background: checkData(this.props.profileData, 'color', false, this.state.color)
 					}}></div>
 			</div>
 		: 
-			<div className="user-info change">
-				<form onSubmit={(e) => this.submitForm(e, null)} className="user-change__form">
+			<div className="profile-info change">
+				<form onSubmit={(e) => this.submitForm(e, null)} className="profile-change__form">
 					<FormField
 						id={'name'}
 						formData={this.state.formData.name}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<span className="user-info__username">{`@${checkData(this.props.profileData,'userName')}`}</span>
+					<span className="profile-info__username">{`@${checkData(this.props.profileData,'userName')}`}</span>
 					<FormField
 						id={'about'}
 						formData={this.state.formData.about}
@@ -204,9 +209,9 @@ class Profile extends React.Component {
 						formData={this.state.formData.internet}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<div className="user-change__color">
-						<button className="user-change__color-button" onClick={(e) => this.toggleColorPicker(e)}>Цвет темы</button>
-						<div className="user-color" onClick={(e) => this.dropdownClickHandler(e)}>
+					<div className="profile-change__color">
+						<button className="profile-change__color-button" onClick={(e) => this.toggleColorPicker(e)}>Цвет темы</button>
+						<div className="profile-color" onClick={(e) => this.dropdownClickHandler(e)}>
 							{this.showColorPicker()}
 						</div>
 					</div>
@@ -215,7 +220,7 @@ class Profile extends React.Component {
 						formData={this.state.formData.date}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<div className="user-info__image" style={{
+					<div className="profile-info__image" style={{
 						background: checkData(this.props.profileData,'color',false,this.state.color)
 						}}></div>
 				</form>
@@ -224,15 +229,13 @@ class Profile extends React.Component {
 	)
 
 	render(){
-		const profileData = this.props.profileData;
-
 		return(
-			<div className="root-wrapper-user">
+			<div className="root-wrapper-profile">
 				{this.showChangeWrapper()}
-				<div className="user-wrapper">
+				<div className="profile-wrapper">
 				</div>
-				<div className="user-header-wrapper">
-					<div className="user-header">
+				<div className="profile-header-wrapper">
+					<div className="profile-header">
 						<ul className="user-nav">
 							<li>
 								<NavLink to="/profile/" exact className="user-nav__link">Твиты<span>{checkData(this.props.profileData,'tweets',true)}</span></NavLink>

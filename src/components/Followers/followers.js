@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './followers.scss';
-import Icons from '../../widgets/Icons';
+import Icons from '../widgets/Icons';
 
 const Followers = (props) => {
 	return(	
