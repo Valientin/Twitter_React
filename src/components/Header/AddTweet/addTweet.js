@@ -2,7 +2,7 @@ import React from 'react';
 
 import './addTweet.scss';
 import Icons from '../../widgets/Icons';
-import { tweet, newTweet } from './strings';
+import { tweet, newTweet,filesErrorMessege } from './strings';
 import moment from 'moment';
 import { validate } from '../../utils';
 import ImageUploaderTweet from '../../widgets/Uploaders/ImageUploader/ImageUploaderTweet';
@@ -36,6 +36,7 @@ export default class addTweet extends React.Component {
         },
         files: [],
         fileObjects: [],
+        filesError:false
         
     }
     componentWillUnmount(){
@@ -46,11 +47,11 @@ export default class addTweet extends React.Component {
 
      handleChangeImage(event) { 
         const files = this.state.files
-        const fileObjects = []
+        const fileObjects = this.state.fileObjects
         
         for (let key in event.target.files){
             if (key !== 'item' && key !== 'length' ){ 
-                fileObjects[key] = event.target.files[key]
+                fileObjects.push(event.target.files[key] )
                   
                 files.push({url: URL.createObjectURL(event.target.files[key]),show: false })
             }
@@ -156,21 +157,31 @@ export default class addTweet extends React.Component {
             dataToSubmit.fileObjects = this.state.fileObjects
             for(let key in this.state.formData){
                 formIsValid = this.state.formData[key].valid && formIsValid;
-            }
-            console.log( dataToSubmit.fileObjects)
+            }   
             if(formIsValid){
-                const fileURLs = []
+                console.log(this.state.fileObjects)
+                console.log(this.state.fileObjects.length)
+                if (this.state.fileObjects.length <=5){
+                
                 this.setState({
-                TweetError: false
+                TweetError: false,
+                filesError: false
                 })
             
                 this.props.addTweet(this.props.user.uid,dataToSubmit);
+                }
+                else{
+                    this.setState({
+                       filesError: true
+                        })
+                }
+                
 
 
             } else {
                 this.setState({
                     TweetError: true
-                })
+                    })
             }
         }
     }
@@ -246,6 +257,13 @@ export default class addTweet extends React.Component {
                                 <AudioUploader handleChangeAudio={(e) => this.handleChangeAudio(e)} files = {this.state.files} />
                             </div>
                         </div>
+                        {
+                            this.state.filesError ?
+                            <div className="label-error">
+                                {filesErrorMessege}
+                            </div>
+                            : null
+                        }
                         <div className="preview">
                             {this.state.files.map((item,i) =>(
                                 item.url ?
