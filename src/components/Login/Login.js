@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FormField from '../FormFields';
+import FormField from '../widgets/FormFields';
 import './Login.scss';
 import { validate } from '../utils';
 
@@ -105,7 +105,7 @@ class Login extends React.Component {
         if(nextProps.log.loginError){
             this.setState({
                 loading: false,
-                loginError: 'Пользователь не найден. Повторите попытку!'
+                loginError: 'Повторите попытку!'
             })
         } 
     }

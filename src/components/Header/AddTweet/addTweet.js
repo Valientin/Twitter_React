@@ -1,12 +1,12 @@
 import React from 'react';
 
 import './addTweet.scss';
-import Icons from '../Icons';
+import Icons from '../../widgets/Icons';
 import { tweet, newTweet } from './strings';
 import moment from 'moment';
-import {validate} from '../utils';
-import ImageUploader from '../Uploaders/ImageUploader';
-import FormField from '../FormFields';
+import { validate } from '../../utils';
+import ImageUploaderTweet from '../../widgets/Uploaders/ImageUploader/ImageUploaderTweet';
+import FormField from '../../widgets/FormFields';
 
 
 export default class addTweet extends React.Component {
@@ -198,7 +198,7 @@ export default class addTweet extends React.Component {
                             change={(elem) => this.updateForm(elem)}
                         />
                         <div className="uploaders">
-                            <ImageUploader handleChange={(e) => this.handleChange(e)} files = {this.state.files} />
+                            <ImageUploaderTweet handleChange={(e) => this.handleChange(e)} files = {this.state.files} />
                         </div>
                         <div className="preview">
                             {this.state.files.map((item,i) =>(

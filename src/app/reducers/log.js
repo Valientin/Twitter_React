@@ -18,7 +18,7 @@ export function log(state = initialState, action) {
     case GET_PROFILE_DATA_FAILED:
       return {...state, message: action.payload}
     case CHANGE_PROFILE_DATA: 
-      return {...state, userProfileData: action.payload}
+      return {...state, userProfileData: Object.assign(state.userProfileData, action.payload)}
     case LOGIN_USER:
       return {...state, loginError: action.payload};
     case REGISTER_USER:

@@ -39,3 +39,31 @@ export function validate(elem){
     
     return error;
 }
+
+
+export function checkData(data, option, number = false, color = '#1da1f2'){ 
+    if(number){
+        return data[option] ? Object.keys(data[option]).length : '0'
+    }
+    if(option === 'about'){
+        return data[option] ? `О себе: ${data[option]}` : ''
+    }
+    if(option === 'city'){
+        return data[option] ? `Местоположение: ${data[option]}` : ''
+    }
+    if(option === 'internet'){
+        return data[option] ? `Сайт: ${data[option]}` : ''
+    }
+    if(option === 'date'){
+        return data[option] ? `Дата рождения: ${data[option]}` : ''
+    }
+    if(option === 'color'){
+        return data[option] ? data[option] : color
+    }
+    return data[option] ? data[option] : ''
+}
+
+
+export function uniqueName(name) {
+    return name + Math.random().toString(36).substr(2, 9);
+}

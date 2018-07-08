@@ -5,7 +5,8 @@ header {
 
 	.container {
 		display: flex;
-		width: 80%;
+		width: 90%;
+		max-width: 1100px;
 		margin: 0 auto;
 		align-items: center;
 		justify-content: space-between;
@@ -113,23 +114,22 @@ header {
 			}
 		}
 	}
-
+	.tweet-button{
+		border-radius: 100px;
+		cursor: pointer;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 7px 16px;
+		background: #1da1f2;
+		border: none;
+		color: #fff;
+		outline: none;
 	
-}
-.tweet-button{
-	border-radius: 100px;
-	cursor: pointer;
-	font-size: 14px;
-	font-weight: 600;
-	padding: 7px 16px;
-	background: #1da1f2;
-	border: none;
-	color: #fff;
-	outline: none;
-
-	&:hover {
-		background: #1f8acc;
+		&:hover {
+			box-shadow: inset 0px -1px 20px 20px rgba(0, 0, 0, 0.16);
+		}
 	}
+
 }
 
 

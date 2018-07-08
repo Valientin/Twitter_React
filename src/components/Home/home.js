@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './home.scss';
-import Icons from '../Icons';
+import Icons from '../widgets/Icons';
 import { reading, searching, connecting, title, description, login, register } from './strings';
 
 const Home = () => {

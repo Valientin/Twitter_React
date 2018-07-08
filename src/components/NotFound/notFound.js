@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './notFound.scss';
-import Icons from '../Icons';
 import { title,description, link } from './strings';
 
-const notFound = ()=>{
+const notFound = () => {
 	return(
 			<div className="notFound-wrapper">
 				<div className="notFound-content">
@@ -17,4 +16,4 @@ const notFound = ()=>{
 			</div>
 		)
 }
-export default notFound
+export default notFound;
