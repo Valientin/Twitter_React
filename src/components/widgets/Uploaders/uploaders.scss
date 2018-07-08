@@ -1,24 +1,25 @@
-.image-upload > input
+.file-uploader > input
 {
     display: none;
     
 }
-.image-upload{
+.file-uploader{
     display: flex;
     align-content: center; 
 }
-.image-upload .addImage
+.file-uploader .addImage, .addVideo, .addAudio
 {
     padding: 10px 10px 1px;
     cursor: pointer;
     border-radius: 5px;
 }
-.addImage:hover
+.addImage:hover, .addAudio:hover, .addVideo:hover
 {
     border: 1px solid #66c4ff
 }
 
-.image-input{
+
+.image-input, .video-input, .audio-input{
     width: 30px;    
 }
 

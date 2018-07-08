@@ -6,7 +6,7 @@ import Icons from '../../../Icons';
  const ImageUploaderTweet = (props) => {
 
     return (
-        <div className="image-upload">
+        <div className="file-uploader">
         <label htmlFor="image-input">
             <Icons 
                 icon='addImage' 
@@ -15,7 +15,7 @@ import Icons from '../../../Icons';
                 style={{margin: '0 5px 0 0'}}
             />
         </label>
-         <input id="image-input" type="file" onChange={(event) => props.handleChange(event)} multiple/>
+         <input id="image-input" type="file" onChange={(event) => props.handleChangeImage(event)} multiple accept="image/*"/>
       </div>
     );
 

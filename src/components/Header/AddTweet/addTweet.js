@@ -6,6 +6,8 @@ import { tweet, newTweet } from './strings';
 import moment from 'moment';
 import { validate } from '../../utils';
 import ImageUploaderTweet from '../../widgets/Uploaders/ImageUploader/ImageUploaderTweet';
+import AudioUploader from '../../widgets/Uploaders/AudioUploader';
+import VideoUploader from '../../widgets/Uploaders/VideoUploader';
 import FormField from '../../widgets/FormFields';
 
 
@@ -42,7 +44,7 @@ export default class addTweet extends React.Component {
        }
      }
 
-     handleChange(event) { 
+     handleChangeImage(event) { 
         const files = this.state.files
         const fileObjects = []
         
@@ -57,7 +59,43 @@ export default class addTweet extends React.Component {
           files,
           fileObjects
         }, () => {
-            //console.log(this.state)
+            console.log(this.state.fileObjects)
+        })
+      }
+      handleChangeVideo(event) { 
+        const files = this.state.files
+        const fileObjects = this.state.fileObjects
+        
+        
+        for (let key in event.target.files){
+            if (key !== 'item' && key !== 'length' ){ 
+                files.push({filename: event.target.files[key].name })
+                fileObjects.push(event.target.files[key] )
+            }
+        }
+        this.setState({
+          files,
+          fileObjects
+        }, () => {
+            console.log(this.state.fileObjects)
+        })
+      }
+      handleChangeAudio(event) { 
+        const files = this.state.files
+        const fileObjects = this.state.fileObjects
+        
+        
+        for (let key in event.target.files){
+            if (key !== 'item' && key !== 'length' ){ 
+                files.push({filename: event.target.files[key].name })
+                fileObjects.push(event.target.files[key] )
+            }
+        }
+        this.setState({
+          files,
+          fileObjects
+        }, () => {
+            console.log(this.state.fileObjects)
         })
       }
 
@@ -119,7 +157,7 @@ export default class addTweet extends React.Component {
             for(let key in this.state.formData){
                 formIsValid = this.state.formData[key].valid && formIsValid;
             }
-
+            console.log( dataToSubmit.fileObjects)
             if(formIsValid){
                 const fileURLs = []
                 this.setState({
@@ -151,7 +189,7 @@ export default class addTweet extends React.Component {
             files: newState
           })
     }
-    showFull = (key) =>{
+    switchFull = (key) =>{
         const newData = {
             ...this.state.files
         }
@@ -159,7 +197,7 @@ export default class addTweet extends React.Component {
             ...newData[key]
         }
         console.log(newDataFile)
-        newDataFile.show = true;
+        newDataFile.show = !newDataFile.show;
         newData[key] = newDataFile;
         let arr = []
         Object.keys(newData).forEach(item => {
@@ -197,20 +235,52 @@ export default class addTweet extends React.Component {
                             formData={this.state.formData.tweet}
                             change={(elem) => this.updateForm(elem)}
                         />
-                        <div className="uploaders">
-                            <ImageUploaderTweet handleChange={(e) => this.handleChange(e)} files = {this.state.files} />
+                        <div className="uploaders" >
+                            <div className="uploader">
+                                <ImageUploaderTweet handleChangeImage={(e) => this.handleChangeImage(e)} files = {this.state.files} />
+                            </div>
+                            <div className="uploader">
+                              <VideoUploader handleChangeVideo={(e) => this.handleChangeVideo(e)} files = {this.state.files} />
+                            </div>
+                            <div className="uploader">
+                                <AudioUploader handleChangeAudio={(e) => this.handleChangeAudio(e)} files = {this.state.files} />
+                            </div>
                         </div>
                         <div className="preview">
                             {this.state.files.map((item,i) =>(
+                                item.url ?
                                 <div className="preview-image" key={i}>
-                                    <img className="image_preview"  src ={item.url} width="120px" height="100px" onClick={() => this.showFull(i)} ></img>
+                                    <img className="image_preview"  src ={item.url} width="120px" height="100px" onClick={() => this.switchFull(i)} ></img>
                                     {item.show ?
                                         
-                                        <div className="image_preview-big-wrapper"><div className="image_preview-big-container"></div></div>
+                                        <div className="image_preview-big-wrapper" onClick={() => this.switchFull(i)}>
+                                            <div className="image_preview-big-container">
+                                                <img className="image_preview-big"  src ={item.url} ></img>
+                                            </div>
+                                        </div>
                                     : null}
-                                    <button className="tweet-button-delete" onClick={() => this.deleteFile(item)}>x</button>
+                                    <button className="image-button-delete" onClick={() => this.deleteFile(item)}>x</button>
+                                </div>
+                                : null                             
+                                ))
+                            }
+                        </div>
+                        <div className="files">
+                            {this.state.files.map((item,i) =>(
+                                item.filename ?
+                                <div className="file" key={i}>
+                                    <Icons 
+                                        icon='clip' 
+                                        size="20px" 
+                                        color="#66c4ff" 
+                                        style={{margin: '0 5px 0 0'}}
+                                    />
+                                    <p>{item.filename}</p>
+                                    <button className="file-button-delete" onClick={() => this.deleteFile(item)}>x</button>
                                 </div>
                                 
+                                : null 
+
                                 ))
                             }
                         </div>

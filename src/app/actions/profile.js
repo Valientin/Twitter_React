@@ -20,8 +20,8 @@ export function addTweet(id,data) {
     for (let key in files){
         let randomFileName = guid();
         let file = files[key];
-        firebaseStorage.ref(`img/userMedia/${randomFileName}`).put(file).then(function(snapshot) {
-            firebaseStorage.ref('img/userMedia/')
+        firebaseStorage.ref(`img/${id}/userMedia/${randomFileName}`).put(file).then(function(snapshot) {
+            firebaseStorage.ref(`img/${id}/userMedia/`)
             .child(randomFileName).getDownloadURL()
             .then( url => {
                 firebaseDB.ref(`users/${id}/tweets/${UidKey}/files/${key}`).set(
