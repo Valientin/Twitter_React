@@ -210,9 +210,12 @@ class Profile extends React.Component {
 						{`Регистрация: ${moment(this.props.user.metadata.creationTime).format("DD MMM YYYY")}`}
 					</span>
 				</div>
-				<div className="profile-info__image" style={{
-					background: checkData(this.props.profileData, 'color', false, this.state.color)
-					}}></div>
+				<div className="profile-info__image-wrapper">
+					<div className="profile-info__image" style={{
+						background: checkData(this.state, 'imageProfile', false, this.props.profileData.imageProfile)
+						}}
+					></div>
+				</div>
 			</div>
 		: 
 			<div className="profile-info change">
@@ -249,13 +252,16 @@ class Profile extends React.Component {
 						formData={this.state.formData.date}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<div className="profile-info__image" >
-						<ImageUploaderProfile
-							imageProfile={this.state.imageProfile}
-							showUploader={this.state.showUploader}
-							handleChangeUploader={this.handleChangeUploader}
-							hideUploaderBlock={this.hideUploaderBlock}
-						/>
+					<div className="profile-info__image-wrapper">
+						<div className="profile-info__image" >
+							<ImageUploaderProfile
+								urlImage={checkData(this.state, 'imageProfile', false, this.props.profileData.imageProfile)}
+								imageProfile={this.state.imageProfile}
+								showUploader={this.state.showUploader}
+								handleChangeUploader={this.handleChangeUploader}
+								hideUploaderBlock={this.hideUploaderBlock}
+							/>
+						</div>
 					</div>
 				</form>
 			</div>

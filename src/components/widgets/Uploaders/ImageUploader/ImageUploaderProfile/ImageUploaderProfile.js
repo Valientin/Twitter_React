@@ -17,7 +17,7 @@ const ImageUploaderProfile = (props) => {
     )
     return (
         <div className={props.showUploader ? 'image-profile active': 'image-profile'}
-            style={{background: props.imageProfile ? `url(${props.imageProfile})`: null}}
+            style={{background: props.urlImage}}
         >
             <h2 className="image-profile__title">Изменить фотографию профиля</h2>
             {showUploaderInput()}
