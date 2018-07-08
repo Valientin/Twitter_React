@@ -1,9 +1,9 @@
 import React from 'react';
-import '../uploaders.scss';
-import Icons from '../../Icons';
+import '../../uploaders.scss';
+import Icons from '../../../Icons';
 
 
- const ImageUploader = (props) => {
+ const ImageUploaderTweet = (props) => {
 
     return (
         <div className="image-upload">
@@ -20,4 +20,4 @@ import Icons from '../../Icons';
     );
 
 }
-export default ImageUploader
+export default ImageUploaderTweet;

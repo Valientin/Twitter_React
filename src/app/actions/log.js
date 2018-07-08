@@ -1,12 +1,17 @@
 import { LOGIN_USER, REGISTER_USER, LOGOUT, CHANGE_PROFILE_DATA} from './actionTypes';
-import { firebaseAuth, firebaseDB } from '../firebase';
-
+import { firebaseAuth, firebaseDB, firebaseStorage } from '../firebase';
+import { uniqueName } from '../../components/utils';
 
 export function changeProfileData(id, data){
+    const newData = {...data};
+    newData.imageProfile = uniqueName(data.imageProfile.name);
+    firebaseStorage.ref(`img/${id}/${newData.imageProfile}`).put(data.imageProfile)
+    .catch(e => console.log(e.message))
+                
     const request = firebaseDB.ref('users/' + id).update({
-        ...data
+        ...newData
     }).then(() => {
-        return data;
+        return newData;
     }).catch(e => { console.log(e.message )})
 
     return {

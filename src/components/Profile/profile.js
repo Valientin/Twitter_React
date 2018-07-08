@@ -10,8 +10,10 @@ import Icons from '../widgets/Icons';
 import Tweets from '../Tweets';
 import Followers from '../Followers';
 import Followed from '../Followed';
+import ImageUploaderProfile from '../widgets/Uploaders/ImageUploader/ImageUploaderProfile';
 
-import { validate, checkData, profileState } from '../utils';
+import { profileState } from './strings';
+import { validate, checkData } from '../utils';
 import './profile.scss';
 
 
@@ -25,6 +27,7 @@ class Profile extends React.Component {
 	componentDidMount(){
 		this.props.getProfileData(this.props.user.uid);
 		document.addEventListener("click", this.documentClickHandler);
+		document.addEventListener("click", this.documentClickHandlerImage);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -33,8 +36,34 @@ class Profile extends React.Component {
 	}
 
 	componentWillUnmount() {
-        document.removeEventListener("click", this.documentClickHandler);
+		document.removeEventListener("click", this.documentClickHandler);
+		document.removeEventListener("click", this.documentClickHandlerImage);
 	}
+
+	documentClickHandlerImage = (e) => {
+        if((e.target.className === 'image-profile') || (e.target.className === 'image-profile__title')){
+            this.setState({
+                showUploader: true
+            });
+        } 
+    }
+
+    handleChangeUploader = (e) => { 
+        const imageObj = e.target.files[0];
+        const image = URL.createObjectURL(imageObj)
+        this.setState({
+           imageProfile: image,
+           imageProfileObj: imageObj,
+           showUploader: false
+        })
+    }
+
+    
+    hideUploaderBlock = () => {
+        this.setState({
+            showUploader: false
+        })
+    }
 	
 	documentClickHandler = () => {
         this.setState({
@@ -48,7 +77,7 @@ class Profile extends React.Component {
 	}
 	
 	toggleColorPicker = (e) => {
-		this.dropdownClickHandler(e)
+		this.dropdownClickHandler(e);
 		this.setState({
 			showColorPicker: !this.state.showColorPicker
 		})
@@ -102,11 +131,11 @@ class Profile extends React.Component {
             for(let key in this.state.formData){
 				dataToSubmit[key] = this.state.formData[key].value
 				dataToSubmit.color = this.state.color;
-            }
-            for(let key in this.state.formData){
 				formIsValid = this.state.formData[key].valid && formIsValid;
-            }
-
+			}
+			if(this.state.imageProfileObj){
+				dataToSubmit.imageProfile = this.state.imageProfileObj;
+			}
             if(formIsValid){
                 this.setState({
                 loading: true,
@@ -220,9 +249,14 @@ class Profile extends React.Component {
 						formData={this.state.formData.date}
 						change={(elem) => this.updateForm(elem)}
 					/>
-					<div className="profile-info__image" style={{
-						background: checkData(this.props.profileData,'color',false,this.state.color)
-						}}></div>
+					<div className="profile-info__image" >
+						<ImageUploaderProfile
+							imageProfile={this.state.imageProfile}
+							showUploader={this.state.showUploader}
+							handleChangeUploader={this.handleChangeUploader}
+							hideUploaderBlock={this.hideUploaderBlock}
+						/>
+					</div>
 				</form>
 			</div>
 
