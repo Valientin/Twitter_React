@@ -46,58 +46,81 @@ export default class addTweet extends React.Component {
      }
 
      handleChangeImage(event) { 
-        const files = this.state.files
+        const files = this.state.files  
         const fileObjects = this.state.fileObjects
-        
-        for (let key in event.target.files){
-            if (key !== 'item' && key !== 'length' ){ 
-                fileObjects.push(event.target.files[key] )
-                  
-                files.push({url: URL.createObjectURL(event.target.files[key]),show: false })
-            }
+        let n = event.target.files.length
+        console.log
+        if (event.target.files.length > 5){
+            n = 5
+            this.setState({
+                filesError: true
+                })
         }
-        this.setState({
-          files,
-          fileObjects
-        }, () => {
-            console.log(this.state.fileObjects)
-        })
-      }
+            for (let key=0; key<n ; key++){
+                if (key !== 'item' && key !== 'length' ){ 
+                    fileObjects.push(event.target.files[key] )
+                    
+                    files.push({url: URL.createObjectURL(event.target.files[key]),show: false })
+                }
+            }
+            this.setState({
+            files,
+            fileObjects
+            }, () => {
+                console.log(this.state.fileObjects)
+            })
+     }
       handleChangeVideo(event) { 
         const files = this.state.files
         const fileObjects = this.state.fileObjects
-        
-        
-        for (let key in event.target.files){
-            if (key !== 'item' && key !== 'length' ){ 
-                files.push({filename: event.target.files[key].name })
-                fileObjects.push(event.target.files[key] )
-            }
+        let n = event.target.files.length
+        if (event.target.files.length > 5){
+            n = 5
+            this.setState({
+                filesError: true
+                })
         }
-        this.setState({
-          files,
-          fileObjects
-        }, () => {
-            console.log(this.state.fileObjects)
-        })
+            for (let key=0; key<n ; key++){
+                if (key !== 'item' && key !== 'length' ){ 
+                    files.push({filename: event.target.files[key].name })
+                    fileObjects.push(event.target.files[key] )
+                }
+            }
+            this.setState({
+              files,
+              fileObjects
+            }, () => {
+                console.log(this.state.fileObjects)
+            })
+        
+        
+        
       }
       handleChangeAudio(event) { 
         const files = this.state.files
         const fileObjects = this.state.fileObjects
-        
-        
-        for (let key in event.target.files){
-            if (key !== 'item' && key !== 'length' ){ 
-                files.push({filename: event.target.files[key].name })
-                fileObjects.push(event.target.files[key] )
-            }
+        let n = event.target.files.length
+        if (event.target.files.length > 5){
+            n = 5
+            this.setState({
+                filesError: true
+                })
         }
-        this.setState({
-          files,
-          fileObjects
-        }, () => {
-            console.log(this.state.fileObjects)
-        })
+            for (let key=0; key<n ; key++){
+                if (key !== 'item' && key !== 'length' ){ 
+                    files.push({filename: event.target.files[key].name })
+                    fileObjects.push(event.target.files[key] )
+                }
+            }
+            this.setState({
+              files,
+              fileObjects
+            }, () => {
+                console.log(this.state.fileObjects)
+            })
+        
+        
+        
       }
 
     clearForm = (elem) => {
@@ -188,16 +211,20 @@ export default class addTweet extends React.Component {
     dropdownClickHandler = (e) => {
         e.nativeEvent.stopImmediatePropagation();
     }
-    deleteFile = (file) =>{
+    deleteFile = (file,key) =>{
+        const oldObjects = this.state.fileObjects
         const newState = []
-        this.state.files.map((item) =>{
+        const newObjects = []
+        this.state.files.map((item,i) =>{
             if (item != file){
                 newState.push(item)
+                newObjects.push(oldObjects[i])
             }
 
         })
         this.setState({
-            files: newState
+            files: newState,
+            fileObjects: newObjects
           })
     }
     switchFull = (key) =>{
@@ -277,7 +304,7 @@ export default class addTweet extends React.Component {
                                             </div>
                                         </div>
                                     : null}
-                                    <button className="image-button-delete" onClick={() => this.deleteFile(item)}>x</button>
+                                    <button className="image-button-delete" onClick={() => this.deleteFile(item,i)}>x</button>
                                 </div>
                                 : null                             
                                 ))
@@ -293,8 +320,8 @@ export default class addTweet extends React.Component {
                                         color="#66c4ff" 
                                         style={{margin: '0 5px 0 0'}}
                                     />
-                                    <p>{item.filename}</p>
-                                    <button className="file-button-delete" onClick={() => this.deleteFile(item)}>x</button>
+                                    <span>{item.filename}</span>
+                                    <button className="file-button-delete" onClick={() => this.deleteFile(item,i)}>x</button>
                                 </div>
                                 
                                 : null 
