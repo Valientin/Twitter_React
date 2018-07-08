@@ -145,16 +145,16 @@
 	display: flex;
 	justify-content: center;
 }
-.file{
-	display: flex;
-}
-.files{
+.uploaded-files{
 	padding: 10px;
 	color: #303c44;
 	font-style: italic;
-}
-.file{
-	p {
-		width: 60%
+	.file{
+		span{
+			max-width: 80%;
+			overflow: hidden;
+			text-overflow:ellipsis;
+		}
+		display: flex;
 	}
 }

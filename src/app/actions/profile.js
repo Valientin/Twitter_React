@@ -24,7 +24,7 @@ export function addTweet(id,data) {
             firebaseStorage.ref(`img/${id}/userMedia/`)
             .child(randomFileName).getDownloadURL()
             .then( url => {
-                firebaseDB.ref(`users/${id}/tweets/${UidKey}/files/${key}`).set(
+                firebaseDB.ref(`tweets/${id}/${UidKey}/files/${key}`).set(
                     {
                         url: url,
                     }
@@ -40,7 +40,7 @@ export function addTweet(id,data) {
    //     console.log('Uploaded a blob or file!');
    // });
     
-    const request = firebaseDB.ref(`users/${id}/tweets/${UidKey}`).set(
+    const request = firebaseDB.ref(`tweets/${id}/${UidKey}`).set(
         {
             text: data.tweet,
             date:  data.date,
