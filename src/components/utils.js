@@ -41,12 +41,12 @@ export function validate(elem){
 }
 
 
-export function checkData(data, option, number = false, color = '#1da1f2'){ 
+export function checkData(data, option, number = false, background = '#1da1f2'){ 
     if(number){
         return data[option] ? Object.keys(data[option]).length : '0'
     }
     if(option === 'imageProfile'){
-        return data[option] ? `url(${data[option]}` :  `url(${color})`
+        return data[option] ? `url(${data[option]}` :  `url(${background})`
     }
     if(option === 'about'){
         return data[option] ? `О себе: ${data[option]}` : ''
@@ -61,7 +61,7 @@ export function checkData(data, option, number = false, color = '#1da1f2'){
         return data[option] ? `Дата рождения: ${data[option]}` : ''
     }
     if(option === 'color'){
-        return data[option] ? data[option] : color
+        return data[option] ? data[option] : background
     }
     return data[option] ? data[option] : ''
 }

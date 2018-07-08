@@ -6,7 +6,7 @@ export function changeProfileData(id, data){
     const newData = {...data};
     if(newData.imageProfile){
         newData.imageProfile = uniqueName(data.imageProfile.name);
-        const request = firebaseStorage.ref(`img/${id}/${newData.imageProfile}`).put(data.imageProfile)
+        firebaseStorage.ref(`img/${id}/${newData.imageProfile}`).put(data.imageProfile)
         .then(() => {
             firebaseStorage.ref(`img/${id}/`)
             .child(newData.imageProfile).getDownloadURL()
@@ -16,27 +16,22 @@ export function changeProfileData(id, data){
                 firebaseDB.ref('users/' + id).update({
                     ...newData
                 }).then(() => {
-                    return newData;
+                    // console.log(newData);
                 }).catch(e => { console.log(e.message )})
             }).catch(err => console.log(err.message))
         })
         .catch(e => console.log(e.message))
-
-        return {
-            type: CHANGE_PROFILE_DATA,
-            payload: request
-        }
     } else {
-        const request = firebaseDB.ref('users/' + id).update({
+        firebaseDB.ref('users/' + id).update({
             ...newData
         }).then(() => {
-            return newData;
+            // console.log(newData);
         }).catch(e => { console.log(e.message )})
-    
-        return {
-            type: CHANGE_PROFILE_DATA,
-            payload: request
-        }
+    }
+
+    return {
+        type: CHANGE_PROFILE_DATA,
+        payload: newData
     }
 }
 

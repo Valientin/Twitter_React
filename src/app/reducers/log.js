@@ -8,6 +8,7 @@ const initialState = {
   loginError: false,
   registerError: false,
   userProfileData: {},
+  changedProfileData: {},
   message: ''
 }
 
@@ -18,7 +19,7 @@ export function log(state = initialState, action) {
     case GET_PROFILE_DATA_FAILED:
       return {...state, message: action.payload}
     case CHANGE_PROFILE_DATA: 
-      return {...state, userProfileData: Object.assign(state.userProfileData, action.payload)}
+      return {...state, changedProfileData: action.payload}
     case LOGIN_USER:
       return {...state, loginError: action.payload};
     case REGISTER_USER:
