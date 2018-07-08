@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FormField from '../FormFields';
+import FormField from '../widgets/FormFields';
 import './Login.scss';
+import { validate } from '../utils';
 
-import { validEmail, validPassword, validRequire, validForm, firstQuestion, secondQuestion,register } from './strings';
+import { validForm, firstQuestion, secondQuestion,register } from './strings';
 
 class Login extends React.Component {
    state = {
@@ -56,8 +57,8 @@ class Login extends React.Component {
             ...newFormData[elem.id]
         }
         newElem.value = elem.e.target.value;
-        if(elem.blur){
-            let validData = this.validate(newElem);
+        if(elem.blur){ 
+            let validData = validate(newElem);
             newElem.valid = validData[0];
             newElem.validationMessage = validData[1]
         }
@@ -70,29 +71,6 @@ class Login extends React.Component {
         })
     }
 
-    validate = (elem) => {
-        let error = [true,''];
-
-        if(elem.validation.email){
-            const valid = /\S+@\S+\.\S+/.test(elem.value)
-            const message = `${!valid ? validEmail : ''}`;
-            error = !valid ? [valid, message] : error
-        }
-
-        if(elem.validation.password){
-            const valid = elem.value.length >= 5;
-            const message = `${!valid ? validPassword : ''}`;
-            error = !valid ? [valid, message] : error
-        }
-
-        if(elem.validation.required){
-            const valid = elem.value.trim() !== '';
-            const message = `${!valid ? validRequire : ''}`;
-            error = !valid ? [valid, message] : error
-        }
-
-        return error;
-    }
 
     submitForm = (e, type) => {
         e.preventDefault();
@@ -127,7 +105,7 @@ class Login extends React.Component {
         if(nextProps.log.loginError){
             this.setState({
                 loading: false,
-                loginError: 'Пользователь не найден. Повторите попытку!'
+                loginError: 'Повторите попытку!'
             })
         } 
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './tweets.scss';
-import Icons from '../Icons';
+import Icons from '../widgets/Icons';
 
 export default class Tweets extends React.Component {
 	render(){

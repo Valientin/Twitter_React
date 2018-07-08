@@ -1,0 +1,155 @@
+.tweet-form{
+	margin: 100px;
+	height: 300px;
+	min-height: 200px;
+	width: 30%;
+	min-width: 400px;
+    background-color: rgb(255, 255, 255);
+   
+	z-index: 3;
+	border-radius: 10px;
+	&__title{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 50px;
+		border-bottom: 1px solid grey;
+		width: 100%;
+	}
+	&__form{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		min-height: 250px;
+		height: auto;
+		width: 100%;
+		background-color: rgb(220, 239, 255);
+		border-radius: 10px;
+	}
+	&__field{
+        padding: 10px 10px 10px 10px;
+		width: 90%;
+		.tweet_input{
+			border-radius: 5px;
+			height: 80px;
+			width: 100%;
+			resize: none;
+            padding: 10px 5px;
+			border:  2px solid #66c4ff;
+			
+		}	
+	}
+	.tweet-button{
+		border-radius: 100px;
+		margin-bottom: 10px;
+		cursor: pointer;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 7px 16px;
+		background: #1da1f2;
+		border: none;
+		color: #fff;
+		outline: none;
+	
+		&:hover {
+			background: #1f8acc;
+		}
+	}
+}
+
+.tweet-form-wrapper{
+	top:0px;
+	display: flex;
+	justify-content: center;
+	position: fixed;
+	min-height: 100vh;
+	z-index: 2;
+	width: 100%;
+	background-color: #403f3f7d;
+	left:0;
+}
+.image_preview{
+	padding: 10px;
+}
+.image-button-delete{
+	position: relative;
+	left: 75%;
+	top: -95px;
+	border-radius: 50%;
+	opacity: 0.70;
+	background-color: black;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+.file-button-delete{
+	margin-left: 10px;
+	font-size: small;
+	padding-top:0;	
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	opacity: 0.70;
+	background-color: black;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+.preview{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.preview-image{
+	width: 120px;
+	min-width: 120px;
+	margin: 0;
+	height: 90px;
+	img{
+		border-radius: 10px;	
+	}
+
+}
+.image_preview-big{
+	max-width: 100%;
+	max-height: 100%;
+    height: auto;
+    z-index: 4;
+}
+.image_preview-big-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 80%;
+	height: 100%;
+	z-index: 4;
+	background-color: rgba(0, 0, 0, 0);
+}
+.image_preview-big-wrapper{
+	padding: 60px;
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	min-width: 100vw;
+	min-height: 100vh;
+	z-index: 4;
+	background-color: rgba(0, 0, 0, 0.342);
+}
+.uploaders{
+	display: flex;
+	justify-content: center;
+}
+.file{
+	display: flex;
+}
+.files{
+	padding: 10px;
+	color: #303c44;
+	font-style: italic;
+}

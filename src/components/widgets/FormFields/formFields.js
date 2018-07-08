@@ -30,6 +30,16 @@ const FormFields = ({formData, change, id}) => {
                     />
                 )
                 break;
+                case 'textarea':
+                formTemplate = (
+                    <textarea
+                        {...formData.config}
+                        value={formData.value}
+                        onBlur={(e) => change({e, id, blur:true})}
+                        onChange={(e) => change({e, id, blur:false})}
+                    />
+                )
+                break;
             default:
                 formTemplate = null;
         }

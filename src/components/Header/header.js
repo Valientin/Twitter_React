@@ -1,33 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import AddTweet from './AddTweet';
 import './header.scss';
-import Icons from '../Icons';
-import { searching, home, tweet, direct } from './strings';
+import Icons from '../widgets/Icons';
+import { searching, home, tweet, direct, validTweet } from './strings';
+import { checkData } from '../utils';
 
 export default class Header extends React.Component {
-    constructor(props){
-        super(props);
 
-        this.state = {
-            showUserConfig: false
-        }
+    state = {
+        showUserConfig: false,
+        showTweetForm: false,
     }
+    
 
     componentDidMount(){
+        if(this.props.user){
+            this.props.getProfileData(this.props.user.uid);
+        }
         document.addEventListener("click", this.documentClickHandler);
+        
+
     } 
     
     componentWillUnmount() {
         document.removeEventListener("click", this.documentClickHandler);
     }
-    
-    documentClickHandler = () => {
-        this.setState({
-            showUserConfig: false
-        });
+    componentWillReceiveProps(nextProps){
+        nextProps.profile.addTweetError ? this.documentClickHandler()
+        : null
     }
 
+    documentClickHandler = () => {
+        this.setState({
+            showUserConfig: false,
+            showTweetForm: false
+        });
+    }
     dropdownClickHandler = (e) => {
         e.nativeEvent.stopImmediatePropagation();
     }
@@ -37,19 +46,25 @@ export default class Header extends React.Component {
             showUserConfig: !this.state.showUserConfig
         })
     }
+    toggleTweetForm = () => {
+        this.setState({
+            showTweetForm: !this.state.showTweetForm
+        })
+    }
+ 
 
     showUserConfig = () => (
         this.state.showUserConfig ?
             <div className="user-config__list">
                 <div className="user-config__info">
-                    <h3>Валентин</h3>
-                    <span>@valikRD167</span>
+                    <h3>{`${checkData(this.props.profileData,'name')} ${checkData(this.props.profileData,'lastname')}`}</h3>
+                    <span>{`@${checkData(this.props.profileData,'userName')}`}</span>
                 </div>
-                <div className="logout-wrapper" onClick={() => this.props.logout()}>
+                <div className="logout-wrapper" onClick={() => this.props.logout()} >
                     <Icons
                         icon='logout' 
                         size="20px" 
-                        color="#1da1f2"
+                        color={checkData(this.props.profileData,'color')}
                         className='outline'
                         style={{margin: '0 12px 0 0'}}
                     />
@@ -57,7 +72,18 @@ export default class Header extends React.Component {
                 </div>
             </div>
         : null
+       
     )
+ 
+    showTweetForm = () => (
+        this.state.showTweetForm ?
+        <div className="tweet-form-wrapper"  >
+            <AddTweet tweetAddShow={this.state.showTweetForm} user={this.props.user} addTweet = {this.props.addTweet} />
+        </div>
+        : null
+    )
+
+
 
     showTemplate = (user) => {
         let template = null;
@@ -88,7 +114,7 @@ export default class Header extends React.Component {
                         </li>
                     </ul>
                     <div className="logo">
-                        <Icons icon='twitter' size="20px" color="#1da1f2"/>
+                        <Icons icon='twitter' size="20px" color={checkData(this.props.profileData,'color')}/>
                     </div>
                     <div className="nav-right">
                         <div className="user-config" onClick={this.dropdownClickHandler}>
@@ -100,8 +126,17 @@ export default class Header extends React.Component {
                             />
                             {this.showUserConfig()}
                         </div>
-                        <button className="tweet-button">{tweet}</button>
+                        <div onClick={this.dropdownClickHandler}>
+                            <button className="tweet-button" 
+                                onClick={() => this.toggleTweetForm()}
+                                style={{background: checkData(this.props.profileData,'color')}}
+                            >
+                                {tweet}
+                            </button>
+                        </div>
+                        
                     </div>
+                    {this.showTweetForm()} 
                 </div>
             )
         : template = (
