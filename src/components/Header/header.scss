@@ -1,7 +1,10 @@
 
 header {
-	padding: 5px 0;
-	border-bottom: 1px solid #c1c0c0;
+	position: fixed;
+    z-index: 6;
+    background: #fff;
+    width: 100%;
+    padding: 6px 0;
 
 	.container {
 		display: flex;

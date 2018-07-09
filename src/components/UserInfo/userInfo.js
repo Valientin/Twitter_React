@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Icons from '../../widgets/Icons';
+import Icons from '../widgets/Icons';
 import {} from './strings';
+import './userInfo.scss';
 
 const UserInfo = (props) => {
 
@@ -22,7 +23,9 @@ const UserInfo = (props) => {
                 /></span>
                 <span>Регистрация: 07.07.2018</span>
             </div>
-            <div className="user-info__image" ></div>
+            <div className="user-info__image-wrapper">
+                <div className="user-info__image" ></div>
+            </div>
         </div>
     )
 }

@@ -8,7 +8,7 @@ import Login from '../containers/login';
 import Register from '../containers/register';
 import Layout from '../components/hoc/Layout';
 import Profile from '../components/Profile';
-import User from '../components/User';
+import User from '../containers/user';
 import NotFound from '../components/NotFound';
 import Followers from '../components/Followers';
 import Followed from '../components/Followed';
