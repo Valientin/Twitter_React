@@ -41,9 +41,12 @@ export function validate(elem){
 }
 
 
-export function checkData(data, option, number = false, color = '#1da1f2'){ 
+export function checkData(data, option, number = false, background = '#1da1f2'){ 
     if(number){
         return data[option] ? Object.keys(data[option]).length : '0'
+    }
+    if(option === 'imageProfile'){
+        return data[option] ? `url(${data[option]}` :  `url(${background})`
     }
     if(option === 'about'){
         return data[option] ? `О себе: ${data[option]}` : ''
@@ -58,98 +61,12 @@ export function checkData(data, option, number = false, color = '#1da1f2'){
         return data[option] ? `Дата рождения: ${data[option]}` : ''
     }
     if(option === 'color'){
-        return data[option] ? data[option] : color
+        return data[option] ? data[option] : background
     }
     return data[option] ? data[option] : ''
 }
 
-export const profileState = {
-    changeProfile: false,
-    changeUserError: false,
-    showColorPicker: false,
-    color: '#1da1f2',
-    formData: {
-        name: {
-            element: 'input',
-            value: '',
-            config: {
-                name: 'name_input',
-                type: 'text',
-                className: 'input-change input-change__name',
-                placeholder: 'Имя'
-            },
-            validation: {
-                required: true,
-                name: true
-            },
-            valid: false,
-            touched: false,
-            validationMessage: ''
-        },
-        about: {
-            element: 'input',
-            value: '',
-            config: {
-                name: 'about_input',
-                type: 'text',
-                className: 'input-change input-change__about',
-                placeholder: 'О себе'
-            },
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: false,
-            validationMessage: ''
-        },
-        city: {
-            element: 'input',
-            value: '',
-            config: {
-                name: 'city_input',
-                type: 'text',
-                className: 'input-change input-change__city',
-                placeholder: 'Местоположение'
-            },
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: false,
-            validationMessage: ''
-        },
-        internet: {
-            element: 'input',
-            value: '',
-            config: {
-                name: 'internet_input',
-                type: 'text',
-                className: 'input-change input-change__internet',
-                placeholder: 'Ваш сайт'
-            },
-            validation: {
-                required: false
-            },
-            valid: true,
-            touched: false,
-            validationMessage: ''
-        },
-        date: {
-            element: 'input',
-            value: '',
-            config: {
-                name: 'date_input',
-                type: 'text',
-                className: 'input-change input-change__date',
-                placeholder: 'Дата рождения (DD/MM/YYYY)'
-            },
-            validation: {
-                required: false,
-                date: true
-            },
-            valid: true,
-            touched: false,
-            validationMessage: ''
-        }
-    }
+
+export function uniqueName(name) {
+    return name + Math.random().toString(36).substr(2, 9);
 }

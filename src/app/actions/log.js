@@ -1,17 +1,37 @@
 import { LOGIN_USER, REGISTER_USER, LOGOUT, CHANGE_PROFILE_DATA} from './actionTypes';
-import { firebaseAuth, firebaseDB } from '../firebase';
-
+import { firebaseAuth, firebaseDB, firebaseStorage } from '../firebase';
+import { uniqueName } from '../../components/utils';
 
 export function changeProfileData(id, data){
-    const request = firebaseDB.ref('users/' + id).update({
-        ...data
-    }).then(() => {
-        return data;
-    }).catch(e => { console.log(e.message )})
+    const newData = {...data};
+    if(newData.imageProfile){
+        newData.imageProfile = uniqueName(data.imageProfile.name);
+        firebaseStorage.ref(`img/${id}/${newData.imageProfile}`).put(data.imageProfile)
+        .then(() => {
+            firebaseStorage.ref(`img/${id}/`)
+            .child(newData.imageProfile).getDownloadURL()
+            .then( url => {
+                newData.imageProfile = url;
+            }).then(() => {
+                firebaseDB.ref('users/' + id).update({
+                    ...newData
+                }).then(() => {
+                    // console.log(newData);
+                }).catch(e => { console.log(e.message )})
+            }).catch(err => console.log(err.message))
+        })
+        .catch(e => console.log(e.message))
+    } else {
+        firebaseDB.ref('users/' + id).update({
+            ...newData
+        }).then(() => {
+            // console.log(newData);
+        }).catch(e => { console.log(e.message )})
+    }
 
     return {
         type: CHANGE_PROFILE_DATA,
-        payload: request
+        payload: newData
     }
 }
 

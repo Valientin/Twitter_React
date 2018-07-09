@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
+import ProfileLayout from '../../containers/profileLayout';
 import './followers.scss';
-import Icons from '../widgets/Icons';
 
 const Followers = (props) => {
 	return(	
+		<ProfileLayout {...props}>
 			<div className="user-followers">
 				<div className="followers">
 					<div className="follower">
@@ -61,6 +61,7 @@ const Followers = (props) => {
 					</div>
 				</div>
 			</div>
+		</ProfileLayout>
 	)	
 }
 
