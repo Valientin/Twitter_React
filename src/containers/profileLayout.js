@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Profile from '../components/Profile';
+import ProfileLayout from '../components/hoc/ProfileLayout';
 import { GET_PROFILE_DATA } from '../app/actions/actionTypes';
 import { changeProfileData } from '../app/actions/log';
 
@@ -16,4 +16,4 @@ const mapStateToProps = (state) => {
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileLayout);
