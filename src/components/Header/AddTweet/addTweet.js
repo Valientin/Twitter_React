@@ -49,8 +49,11 @@ export default class addTweet extends React.Component {
         const files = this.state.files  
         const fileObjects = this.state.fileObjects
         let n = event.target.files.length
-        if (event.target.files.length > 5){
-            n = 5
+
+        let max = 5 - this.state.fileObjects.length
+        console.log
+        if (event.target.files.length > max){
+            n = max;
             this.setState({
                 filesError: true
                 })
