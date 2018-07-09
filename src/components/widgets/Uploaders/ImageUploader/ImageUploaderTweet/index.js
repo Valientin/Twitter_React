@@ -1,3 +1,3 @@
-import ImageUploaderTweet from './ImageUploaderTweet';
+import ImageUploaderTweet from './imageUploaderTweet';
 
 export default ImageUploaderTweet;

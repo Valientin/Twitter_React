@@ -1,5 +1,4 @@
 .tweet-form{
-	margin: 100px;
 	height: 300px;
 	min-height: 200px;
 	width: 30%;
@@ -40,6 +39,10 @@
 			
 		}	
 	}
+	.input-wrapper{
+		display: block;
+		min-height: 110px;
+	}
 	.tweet-button{
 		border-radius: 100px;
 		margin-bottom: 10px;
@@ -59,7 +62,8 @@
 }
 
 .tweet-form-wrapper{
-	top:0px;
+	padding-top: 47px;
+	top: 0px;
 	display: flex;
 	justify-content: center;
 	position: fixed;
@@ -142,8 +146,12 @@
 	background-color: rgba(0, 0, 0, 0.342);
 }
 .uploaders{
+	height: 50px;
 	display: flex;
 	justify-content: center;
+	.uploader{
+		width: 7	0px;
+	}
 }
 .file{
 	display: flex;
