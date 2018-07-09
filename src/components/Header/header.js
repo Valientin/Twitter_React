@@ -78,7 +78,7 @@ export default class Header extends React.Component {
     showTweetForm = () => (
         this.state.showTweetForm ?
         <div className="tweet-form-wrapper"  >
-            <AddTweet tweetAddShow={this.state.showTweetForm} user={this.props.user} addTweet = {this.props.addTweet} />
+            <AddTweet tweetAddShow={this.state.showTweetForm} user={this.props.user} addTweet = {this.props.addTweet} addTweetState= {this.props.addTweetState} />
         </div>
         : null
     )
