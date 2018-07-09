@@ -51,7 +51,7 @@ export default class addTweet extends React.Component {
         let n = event.target.files.length
 
         let max = 5 - this.state.fileObjects.length
-        console.log
+
         if (event.target.files.length > max){
             n = max;
             this.setState({
@@ -60,9 +60,9 @@ export default class addTweet extends React.Component {
         }
             for (let key=0; key<n ; key++){
                 if (key !== 'item' && key !== 'length' ){ 
-                    fileObjects.push(event.target.files[key] )
+                    fileObjects.push({obj: event.target.files[key] , type: "img"} )
                     
-                    files.push({url: URL.createObjectURL(event.target.files[key]),show: false })
+                    files.push({url: URL.createObjectURL(event.target.files[key]),show: false , type: "img" })
                 }
             }
             this.setState({
@@ -84,8 +84,8 @@ export default class addTweet extends React.Component {
         }
             for (let key=0; key<n ; key++){
                 if (key !== 'item' && key !== 'length' ){ 
-                    files.push({filename: event.target.files[key].name })
-                    fileObjects.push(event.target.files[key] )
+                    files.push({filename: event.target.files[key].name, url: URL.createObjectURL(event.target.files[key]), type:"video" })
+                    fileObjects.push({obj: event.target.files[key] , type: "video"} )
                 }
             }
             this.setState({
@@ -110,8 +110,8 @@ export default class addTweet extends React.Component {
         }
             for (let key=0; key<n ; key++){
                 if (key !== 'item' && key !== 'length' ){ 
-                    files.push({filename: event.target.files[key].name })
-                    fileObjects.push(event.target.files[key] )
+                    files.push({filename: event.target.files[key].name,url: URL.createObjectURL(event.target.files[key]), type:"audio" })
+                    fileObjects.push({obj: event.target.files[key] , type: "audio"} )
                 }
             }
             this.setState({
@@ -180,6 +180,7 @@ export default class addTweet extends React.Component {
             }
             dataToSubmit.date = moment().format('MMMM Do YYYY, h:mm:ss');
             dataToSubmit.fileObjects = this.state.fileObjects
+            dataToSubmit.files = this.state.files
             for(let key in this.state.formData){
                 formIsValid = this.state.formData[key].valid && formIsValid;
             }   
@@ -190,8 +191,9 @@ export default class addTweet extends React.Component {
                 TweetError: false,
                 filesError: false
                 })
-            
+                this.props.addTweetState(this.props.user.uid,dataToSubmit);
                 this.props.addTweet(this.props.user.uid,dataToSubmit);
+                
                 }
                 else{
                     this.setState({
@@ -280,7 +282,7 @@ export default class addTweet extends React.Component {
                         }
                         <div className="preview">
                             {this.state.files.map((item,i) =>(
-                                item.url ?
+                                item.type == "img" ?
                                 <div className="preview-image" key={i}>
                                     <img className="image_preview"  src ={item.url} width="120px" height="100px" onClick={() => this.switchFull(i)} ></img>
                                     {item.show ?
@@ -298,7 +300,7 @@ export default class addTweet extends React.Component {
                             }
                         </div>
                         <div className="uploaded-files">
-                            {this.state.files.map((item,i) =>(
+                                {this.state.files.map((item,i) =>(
                                 item.filename ?
                                 <div className="file" key={i}>
                                     <Icons 

@@ -1,4 +1,4 @@
-import { ADD_TWEET } from './actionTypes';
+import { ADD_TWEET, ADD_TWEET_TO_STATE } from './actionTypes';
 import { firebaseAuth, firebaseDB, firebaseStorage } from '../firebase';
 
 function guid() {
@@ -10,7 +10,15 @@ function guid() {
     return s4() + s4() +  + s4() +  + s4() +  + s4() +  + s4() + s4() + s4();
   }
 
-
+export function addTweetState(uid,data){
+    const id = guid()
+    const request = {};
+    request[id] = data;
+    return{
+        type: ADD_TWEET_TO_STATE,
+        payload: request
+    }
+}
 
 export function addTweet(id,data) {
     let UidKey = firebaseDB.ref(`users/${id}/tweets`).push().getKey();
@@ -19,7 +27,7 @@ export function addTweet(id,data) {
     const FilesUrl = []
     for (let key in files){
         let randomFileName = guid();
-        let file = files[key];
+        let file = files[key].obj;
         firebaseStorage.ref(`img/${id}/userMedia/${randomFileName}`).put(file).then(function(snapshot) {
             firebaseStorage.ref(`img/${id}/userMedia/`)
             .child(randomFileName).getDownloadURL()
@@ -27,6 +35,7 @@ export function addTweet(id,data) {
                 firebaseDB.ref(`tweets/${id}/${UidKey}/files/${key}`).set(
                     {
                         url: url,
+                        type: files[key].type
                     }
                 )
 
@@ -42,7 +51,7 @@ export function addTweet(id,data) {
     
     const request = firebaseDB.ref(`tweets/${id}/${UidKey}`).set(
         {
-            text: data.tweet,
+            tweet: data.tweet,
             date:  data.date,
             commnets: ' ',
         }
