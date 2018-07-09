@@ -49,6 +49,7 @@ export default class addTweet extends React.Component {
         const files = this.state.files  
         const fileObjects = this.state.fileObjects
         let n = event.target.files.length
+
         let max = 5 - this.state.fileObjects.length
         console.log
         if (event.target.files.length > max){
@@ -68,7 +69,7 @@ export default class addTweet extends React.Component {
             files,
             fileObjects
             }, () => {
-                console.log(this.state.fileObjects)
+                //console.log(this.state.fileObjects)
             })
      }
       handleChangeVideo(event) { 
@@ -91,7 +92,7 @@ export default class addTweet extends React.Component {
               files,
               fileObjects
             }, () => {
-                console.log(this.state.fileObjects)
+                //console.log(this.state.fileObjects)
             })
         
         
@@ -117,7 +118,7 @@ export default class addTweet extends React.Component {
               files,
               fileObjects
             }, () => {
-                console.log(this.state.fileObjects)
+                //console.log(this.state.fileObjects)
             })
         
         
@@ -183,8 +184,6 @@ export default class addTweet extends React.Component {
                 formIsValid = this.state.formData[key].valid && formIsValid;
             }   
             if(formIsValid){
-                console.log(this.state.fileObjects)
-                console.log(this.state.fileObjects.length)
                 if (this.state.fileObjects.length <=5){
                 
                 this.setState({
@@ -235,7 +234,6 @@ export default class addTweet extends React.Component {
         const newDataFile = {
             ...newData[key]
         }
-        console.log(newDataFile)
         newDataFile.show = !newDataFile.show;
         newData[key] = newDataFile;
         let arr = []
@@ -245,20 +243,8 @@ export default class addTweet extends React.Component {
         this.setState({
             files: arr
         },()=>{
-            console.log(this.state.files)
+            //console.log(this.state.files)
         })
-        //let newFile={}
-        //this.state.files.map((item) =>{
-            //if (item == file){
-              //  newFile.show = true;
-               // newFile.url = item;
-               // 
-                //this.setState({
-                    //files: newFile
-                  //})
-            //}
-
-        //})
     }
 	render(){
 		return(
@@ -311,7 +297,7 @@ export default class addTweet extends React.Component {
                                 ))
                             }
                         </div>
-                        <div className="files">
+                        <div className="uploaded-files">
                             {this.state.files.map((item,i) =>(
                                 item.filename ?
                                 <div className="file" key={i}>
