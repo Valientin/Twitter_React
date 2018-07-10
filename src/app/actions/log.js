@@ -1,5 +1,6 @@
 import { LOGIN_USER, REGISTER_USER, LOGOUT, CHANGE_PROFILE_DATA} from './actionTypes';
 import { firebaseAuth, firebaseDB, firebaseStorage } from '../firebase';
+import moment from 'moment';
 import { uniqueName } from '../../components/utils';
 
 export function changeProfileData(id, data){
@@ -64,6 +65,7 @@ export function registerUser(data) {
             userName: data.userName,
             name: data.name,
             lastname: data.lastname,
+            creationTime: moment().format('DD MMM YYYY'),
             email: data.email
         })
         

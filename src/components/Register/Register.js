@@ -45,10 +45,9 @@ class Register extends React.Component {
 
             for(let key in this.state.formData){
                 dataToSubmit[key] = this.state.formData[key].value
-            }
-            for(let key in this.state.formData){
                 formIsValid = this.state.formData[key].valid && formIsValid;
             }
+            
 
             if(formIsValid){
                 this.setState({

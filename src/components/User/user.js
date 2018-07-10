@@ -1,34 +1,27 @@
 import React from 'react';
 
+import UserLayout from '../hoc/UserLayout';
 import Tweets from '../Tweets';
-
-import UserHeader from './UserHeader';
-import UserInfo from './UserInfo';
 
 import {} from './strings';
 import './user.scss';
 
-class User extends React.Component {
-	constructor(props){
-		super(props);
-
-		this.state = {}
-	}
-
-	render(){
-		return(
-			<div className="user-page">
-				<div className="user-page__background"></div>
-				<UserHeader />
-				<div className="content-wrapper">
-					<div className="content">
-						<UserInfo />
-						<Tweets />
-					</div>
-				</div>
-			</div>
-		)	
-	}
+const User = (props) => {
+	return(
+		<UserLayout
+			profileId={props.user.uid}
+			userData={props.userData.userData}
+			userId={props.match.params.id}
+			followed={props.followedUser} 
+			followedToUser={props.followedToUser}
+			unFollowedUser={props.unFollowedUser}
+			followedOnUserFirebase={props.followedOnUserFirebase}
+			unFollowedOnUserFirebase={props.unFollowedOnUserFirebase}
+		>
+			<Tweets />
+		</UserLayout>
+	)
 }
+
 
 export default User;

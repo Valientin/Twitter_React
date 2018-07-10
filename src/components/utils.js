@@ -60,6 +60,9 @@ export function checkData(data, option, number = false, background = '#1da1f2'){
     if(option === 'date'){
         return data[option] ? `Дата рождения: ${data[option]}` : ''
     }
+    if(option === 'creationTime'){
+        return data[option] ? `Регистрация: ${data[option]}` : ''
+    }
     if(option === 'color'){
         return data[option] ? data[option] : background
     }
