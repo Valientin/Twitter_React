@@ -42,6 +42,35 @@
 	&__photo {
 		margin-right: 15px;
 	}
+	.tweet_preview-big{
+		max-width: 100%;
+		max-height: 100%;
+		height: auto;
+		z-index: 4;
+	}
+	.tweet_preview-big-container{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 80%;
+		height: 100%;
+		z-index: 4;
+		background-color: rgba(0, 0, 0, 0);
+	}
+	.tweet_preview-big-wrapper{
+		padding: 60px;
+		position: fixed;
+		display: flex;
+		justify-content: center;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		min-width: 100vw;
+		min-height: 100vh;
+		z-index: 4;
+		background-color: rgba(0, 0, 0, 0.342);
+	}
 
 	
 

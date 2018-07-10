@@ -3,6 +3,7 @@ import Icons from '../widgets/Icons';
 import { Player } from 'video-react';
 import "../../../node_modules/video-react/dist/video-react.css";
 import './itemTweet.scss';
+import Comments from '../Comments'
 
 const ItemTweet = (props) => {
     const showFiles = () => {
@@ -43,6 +44,14 @@ const ItemTweet = (props) => {
             </div>
         ))
     }
+    const showComment = () =>{
+        return props.showComment ?
+            <Comments 
+
+            />
+        :null
+    }
+    
     return (
         <div className="user-tweets__item">		
 			<div className="user-tweets__photo">
@@ -62,9 +71,15 @@ const ItemTweet = (props) => {
                     {showFiles()}
                 </div>
                 <div className="user-tweets__icons">
-                    <Icons icon='comment' size="16px" color="#0b1c50"/>
-                    <Icons icon='like' size="16px" color="#0b1c50"/>
+                    <div onClick={() => props.toogleComments(props)}>
+                        <Icons icon='comment' size="16px" color="#0b1c50"  />
+                    </div>
+                    <div>
+                        <Icons icon='like' size="16px" color="#0b1c50"/>
+                    </div>
                 </div>
+                {showComment()}
+                
             </div>
         </div>
     )
