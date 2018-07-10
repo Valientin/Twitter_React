@@ -51,7 +51,10 @@ export default class Tweets extends React.Component {
 					/>
 				)
 			})
-		: null
+		: 
+			<div className="user-tweets__none">
+				<h3>Еще нет ни одного твита</h3>
+			</div>
 	}
 
 	render(){

@@ -37,6 +37,6 @@ function* getUserData(action) {
 
 export const profile = [
     takeEvery(GET_PROFILE_DATA, getProfileData),
-    takeEvery(GET_USER_DATA, getUserData)
+    takeEvery(GET_USER_DATA, getUserData),
     takeEvery(GET_TWEETS_PROFILE, getTweetsProfile)
 ];
