@@ -1,0 +1,28 @@
+.user-tweets {
+
+    
+    .user-tweets__files{
+        padding-right: 15px;
+    }
+    .user-tweets__file{
+        width: 60%;
+        padding: 10px;
+    }
+    .tweet_image{
+        max-width: 100%;
+        max-height: 300px
+    }
+    &__text{
+        width: 100%;
+        p {
+            color: #000;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+    }
+    &__info-name{
+        display: flex;
+        flex-direction: column;
+    }
+}
+

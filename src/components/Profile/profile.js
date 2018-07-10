@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tweets from '../Tweets';
+import Tweets from '../../containers/tweets';
 import ProfileLayout from '../../containers/profileLayout';
 
 import './profile.scss';
@@ -8,7 +8,7 @@ import './profile.scss';
 const Profile = (props) => {
 	return(
 		<ProfileLayout {...props}>
-			<Tweets/>
+			<Tweets id={props.user.uid}/>
 		</ProfileLayout>
 	)
 }
