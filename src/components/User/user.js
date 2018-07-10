@@ -8,7 +8,16 @@ import './user.scss';
 
 const User = (props) => {
 	return(
-		<UserLayout>
+		<UserLayout
+			profileId={props.user.uid}
+			userData={props.userData.userData}
+			userId={props.match.params.id}
+			followed={props.followedUser} 
+			followedToUser={props.followedToUser}
+			unFollowedUser={props.unFollowedUser}
+			followedOnUserFirebase={props.followedOnUserFirebase}
+			unFollowedOnUserFirebase={props.unFollowedOnUserFirebase}
+		>
 			<Tweets />
 		</UserLayout>
 	)

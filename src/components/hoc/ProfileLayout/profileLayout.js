@@ -124,12 +124,13 @@ class ProfileLayout extends React.Component {
 
             for(let key in this.state.formData){
 				dataToSubmit[key] = this.state.formData[key].value
-				dataToSubmit.color = this.state.color;
+				dataToSubmit.color = this.state.color ? this.state.color : '#1da1f2';
 				formIsValid = this.state.formData[key].valid && formIsValid;
 			}
 			if(this.state.imageProfileObj){
 				dataToSubmit.imageProfile = this.state.imageProfileObj;
 			}
+
             if(formIsValid){
                 this.setState({
                 loading: true,
@@ -200,9 +201,7 @@ class ProfileLayout extends React.Component {
 						color="7a7a7a"
 						style={{margin: '0 5px 0 0'}}
 					/></span>
-					<span>
-						{`Регистрация: ${moment(this.props.user.metadata.creationTime).format("DD MMM YYYY")}`}
-					</span>
+					<span>{checkData(this.props.profileData, 'creationTime')}</span>
 				</div>
 				<div className="profile-info__image-wrapper">
 					<div className="profile-info__image" style={{
@@ -266,7 +265,9 @@ class ProfileLayout extends React.Component {
 		return(
 			<div className="root-wrapper-profile">
 				{this.showChangeWrapper()}
-				<div className="profile-wrapper">
+				<div className="profile-wrapper" style={{
+						background: checkData(this.props.profileData, 'color')
+						}}>
 				</div>
 				<div className="profile-header-wrapper">
 					<div className="profile-header">
