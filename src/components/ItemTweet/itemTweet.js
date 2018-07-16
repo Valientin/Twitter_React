@@ -1,9 +1,13 @@
 import React from 'react'
+
 import Icons from '../widgets/Icons';
 import { Player } from 'video-react';
+import Comments from '../Comments'
+
+import { checkData } from '../utils';
 import "../../../node_modules/video-react/dist/video-react.css";
 import './itemTweet.scss';
-import Comments from '../Comments'
+
 
 const ItemTweet = (props) => {
     const showFiles = () => {
@@ -45,9 +49,13 @@ const ItemTweet = (props) => {
         ))
     }
     const showComment = () =>{
-        return props.showComment ?
-            <Comments 
-
+        return props.showComment && (props.commentId === props.tweetId) ?
+            <Comments
+                addTweetComment={props.addTweetComment}
+                allComments={props.comments} 
+                profileData={props.profileData}
+                tweetId={props.tweetId}
+                userId={props.userId}
             />
         :null
     }
@@ -60,18 +68,17 @@ const ItemTweet = (props) => {
             <div className="user-tweets__text">
                 <div className="user-tweets__info">
                 <div className="user-tweets__info-name" >
-                    <span className="user-tweets__name">MAXIM RUDENKO</span>
-                    <span className="user-tweets__username">@MaximrudNko</span>
+                    <span className="user-tweets__name">{checkData(props, 'name')} {checkData(props, 'lastname')}</span>
+                    <span className="user-tweets__username">@{checkData(props, 'userName')}</span>
                 </div>
-                    <span className="user-tweets__time">{props.date}</span>
-                    
+                    <span className="user-tweets__time">{props.date}</span>    
                 </div>
                 <p>{props.tweet} </p>
                 <div className="user-tweets__files" >
                     {showFiles()}
                 </div>
                 <div className="user-tweets__icons">
-                    <div onClick={() => props.toogleComments(props)}>
+                    <div onClick={() => props.showComments(props.tweetId)}>
                         <Icons icon='comment' size="16px" color="#0b1c50"  />
                     </div>
                     <div>
@@ -79,7 +86,6 @@ const ItemTweet = (props) => {
                     </div>
                 </div>
                 {showComment()}
-                
             </div>
         </div>
     )

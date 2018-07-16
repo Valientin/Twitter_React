@@ -1,5 +1,5 @@
-import { ADD_TWEET, ADD_TWEET_TO_STATE } from './actionTypes';
-import { firebaseAuth, firebaseDB, firebaseStorage } from '../firebase';
+import { ADD_TWEET, ADD_TWEET_TO_STATE, CLEAR_TWEETS_STATE, ADD_TWEET_COMMENT } from './actionTypes';
+import { firebaseDB, firebaseStorage } from '../firebase';
 
 function guid() {
     function s4() {
@@ -44,19 +44,17 @@ export function addTweet(id,data) {
            
 
     }
-    
-   // firebaseStorage.ref('img/').put(file).then(function(snapshot) {
-   //     console.log('Uploaded a blob or file!');
-   // });
-    
+ 
     const request = firebaseDB.ref(`tweets/${id}/${UidKey}`).set(
         {
+            lastname: data.lastname,
+            name: data.name,
+            userName: data.userName,
             tweet: data.tweet,
             date:  data.date,
-            commnets: ' ',
+            comments: ' ',
         }
     ).then( ()=> {
-        console.log('Uploaded a blob or file!');
         return {
             type: ADD_TWEET,
             payload: true
@@ -69,4 +67,28 @@ export function addTweet(id,data) {
     })
     return request;
     
+}
+
+export function addTweetComment(idUser, idTweet, data){
+    let UidKey = firebaseDB.ref(`tweets/${idUser}/${idTweet}/comments`).push().getKey();
+    firebaseDB.ref(`tweets/${idUser}/${idTweet}/comments/${UidKey}`).set({
+        ...data
+    })
+
+    return {
+        type: ADD_TWEET_COMMENT,
+        payload: {
+            idUser,
+            idTweet,
+            idComment: UidKey,
+            data
+        }
+    }
+}
+
+export function clearTweetsState() {
+    return {
+        type: CLEAR_TWEETS_STATE,
+        payload: {}
+    }
 }

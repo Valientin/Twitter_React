@@ -17,10 +17,8 @@ export function user(state = initialState, action) {
         case GET_USER_DATA_FAILED:
             return {...state, getUserData: false}
         case FOLLOWED_ON_USER:
-            console.log(action.payload)
             return {...state, setFollowed: action.payload}
         case UNFOLLOWED_ON_USER:
-            console.log(action.payload)
             return {...state, setUnFollowed: action.payload}
         default:
             return state;

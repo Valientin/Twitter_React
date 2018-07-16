@@ -39,6 +39,10 @@ export default class addTweet extends React.Component {
         filesError:false
         
     }
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     componentWillUnmount(){
        if (this.props.tweetAddShow){
            this.clearForm('tweet')
@@ -176,14 +180,16 @@ export default class addTweet extends React.Component {
 
             for(let key in this.state.formData){
                 dataToSubmit[key] = this.state.formData[key].value;
-                
+                formIsValid = this.state.formData[key].valid && formIsValid;
             }
             dataToSubmit.date = moment().format('MMMM Do YYYY, h:mm:ss');
-            dataToSubmit.fileObjects = this.state.fileObjects
-            dataToSubmit.files = this.state.files
-            for(let key in this.state.formData){
-                formIsValid = this.state.formData[key].valid && formIsValid;
-            }   
+            dataToSubmit.fileObjects = this.state.fileObjects;
+            dataToSubmit.files = this.state.files;
+            dataToSubmit.comments = '';
+            dataToSubmit.name = this.props.profileData.name;
+            dataToSubmit.lastname = this.props.profileData.lastname;
+            dataToSubmit.userName = this.props.profileData.userName;
+            
             if(formIsValid){
                 if (this.state.fileObjects.length <=5){
                 

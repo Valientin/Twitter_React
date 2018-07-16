@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Icons from '../widgets/Icons';
 import './tweets.scss';
 
 import ItemTweet from '../ItemTweet'
@@ -12,8 +13,12 @@ export default class Tweets extends React.Component {
 		commentId: null
 	}
 	componentDidMount(){
-		console.log(this.props)
-		this.props.getTweetsProfile(this.props.id)
+		this.props.getProfileDataTweets(this.props.profileId ? this.props.profileId : this.props.id);
+		this.props.getTweetsProfile(this.props.id);
+	}
+
+	componentWillUnmount(){
+		this.props.clearTweetsState()
 	}
 	toogleFullImage = (url) => {
 		this.setState({
@@ -21,16 +26,32 @@ export default class Tweets extends React.Component {
 			imagePreviewUrl: url
 		})
 	}
-	toogleComments = (data) => {
-		console.log(id)
-		this.setState({
-			showComment: !this.state.showComment,
-			commentId: data.tweetId
-		})
+	showComments = (id) => {
+		if(id !== this.state.commentId && this.state.showComment){
+			this.setState({
+				commentId: id
+			})
+		} else {
+			this.setState({
+				showComment: !this.state.showComment,
+				commentId: id
+			})
+		}
+		
 	}
 	dropdownClickHandler = (e) => {
         e.nativeEvent.stopImmediatePropagation();
-    }
+	}
+	
+	showFull = () => (
+		this.state.showFull ?                      
+			<div className="tweet_preview-big-wrapper" onClick={() => this.toogleFullImage(this.state.imagePreviewUrl)}>
+				<div className="tweet_preview-big-container" >
+					<img className="tweet_preview-big"  src ={this.state.imagePreviewUrl} onClick={() => this.dropdownClickHandler} ></img>
+				</div>
+			</div>
+		: null
+	)
 
 
 	showTweets = () => {
@@ -39,12 +60,15 @@ export default class Tweets extends React.Component {
 			tweets.map((item,i) => {
 				return(
 					<ItemTweet 
-						key={i} {...this.props.tweetsProfile[item]} 
+						key={i} 
+						{...this.props.tweetsProfile[item]} 
 						showFull = {this.state.showFull} 
 						toogleFullImage={this.toogleFullImage} 
-						toogleComments={this.toogleComments} 
+						showComments={(id) => this.showComments(id)} 
 						showComment={this.state.showComment} 
 						commentId={this.state.commentId}
+						profileData={this.props.profileData}
+						addTweetComment={this.props.addTweetComment}
 						tweetId={item}
 						userId={this.props.id}
 
@@ -64,13 +88,10 @@ export default class Tweets extends React.Component {
 						<h2>Твиты</h2>
 					</div>
 				{this.showTweets()}
-				{this.state.showFull ?                      
-                    <div className="tweet_preview-big-wrapper" onClick={() => this.toogleFullImage(this.state.imagePreviewUrl)}>
-						<div className="tweet_preview-big-container" >
-							<img className="tweet_preview-big"  src ={this.state.imagePreviewUrl} onClick={() => this.dropdownClickHandler} ></img>
-						</div>
-                    </div>
-                : null}
+				{this.showFull()}
+				<div className="user-tweets__logo">
+					<Icons icon='twitter' size="20px" color="#000" />
+				</div>
 			</div>
 		)	
 	}

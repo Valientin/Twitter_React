@@ -1,7 +1,7 @@
 import React from 'react';
 
 import UserLayout from '../hoc/UserLayout';
-import Tweets from '../Tweets';
+import Tweets from '../../containers/tweets';
 
 import {} from './strings';
 import './user.scss';
@@ -18,7 +18,7 @@ const User = (props) => {
 			followedOnUserFirebase={props.followedOnUserFirebase}
 			unFollowedOnUserFirebase={props.unFollowedOnUserFirebase}
 		>
-			<Tweets />
+			<Tweets id={props.match.params.id} profileId={props.user.uid}/>
 		</UserLayout>
 	)
 }

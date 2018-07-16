@@ -1,0 +1,45 @@
+.tweet-comment {
+    &__item {
+        display: flex;
+        border-top: 1px solid #b3b3b3;
+        margin: 0 -60px 0 -86px;
+        padding: 13px 30px;
+    }
+
+    &__info {
+        width: 84%;
+    }
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 7px;
+    }
+
+    &__logo {
+        height: 60px;
+        width: 60px;
+        background-position: center !important;
+        background-size: cover !important;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    &__user {
+        margin-right: auto;
+        font-size: 15px;
+        color: #444;
+        font-weight: 600;
+    }
+
+    &__username {
+        font-weight: 400;
+        color: #a7a7a7;
+    }
+
+    &__text {
+        color: #000;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+}

@@ -11,7 +11,7 @@ module.exports = merge(webpackCommonConfig, {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
 	],
-	devtool: 'cheap-module-eval-source-map',
+	devtool: 'cheap-module-source-map',
 	devServer: {
 		hot: true,
 	}
