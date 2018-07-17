@@ -21,7 +21,6 @@ import { ADD_TWEET, ADD_TWEET_TO_STATE,
         const newTweets = {...state.tweets};
         const comments = newTweets[action.payload.idTweet].comments ? newTweets[action.payload.idTweet].comments : newTweets[action.payload.idTweet].comments = {};
         comments[action.payload.idComment] = {...action.payload.data};
-        console.log(newTweets)
         return {...state, tweets: newTweets}
       case GET_TWEETS_PROFILE_SUCCEEDED:
         return {...state, tweets: action.payload};

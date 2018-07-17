@@ -2,63 +2,22 @@ import React from 'react';
 
 import ProfileLayout from '../../containers/profileLayout';
 import './followed.scss';
+import FollowItem from '../FollowItem';
 
 const Followed = (props) => {
+
+	const getFollowed = () =>(
+		props.followedData ?
+		Object.keys(props.followedData).map((item,i) =>(
+				<FollowItem {...props.followedData[item]} id={item} key = {i} />
+			))
+		:null
+	)
 	return(	
 		<ProfileLayout {...props}>
-			<div className="user-followed">
-				<div className="followed">
-					<div className="followed-user">
-						<div className="followed-user__wrapper">
-
-						</div>
-						<div className="followed-bar" >
-							<div className="followed-user__photo">
-								photo
-							</div>
-							<div className="followed-user__butt">
-								<button className="follow-button">Читать</button>
-							</div>
-						</div>
-						<div className="followed-user__info">	
-							<h3>Petro Kepka</h3>
-							<p>@KepkaBest</p>
-						</div>
-					</div>
-					<div className="followed-user">
-						<div className="followed-user__wrapper">
-
-						</div>
-						<div className="followed-bar" >
-							<div className="followed-user__photo">
-								photo
-							</div>
-							<div className="followed-user__butt">
-								<button className="follow-button">Читать</button>
-							</div>
-						</div>
-						<div className="followed-user__info">	
-							<h3>Petro Kepka</h3>
-							<p>@KepkaBest</p>
-						</div>
-					</div>
-					<div className="followed-user">
-						<div className="followed-user__wrapper">
-
-						</div>
-						<div className="followed-bar" >
-							<div className="followed-user__photo">
-								photo
-							</div>
-							<div className="followed-user__butt">
-								<button className="follow-button">Читать</button>
-							</div>
-						</div>
-						<div className="followed-user__info">	
-							<h3>Petro Kepka</h3>
-							<p>@KepkaBest</p>
-						</div>
-					</div>
+			<div className="user-followers">
+				<div className="followers">
+					{getFollowed()}
 				</div>
 			</div>
 		</ProfileLayout>
