@@ -4,4 +4,19 @@
         align-items: center;
         justify-content: space-between;
     }
+
+
+    .input-wrapper {
+        flex-direction: column;
+        margin-bottom: 0;
+        margin-right: 15px;
+
+        .label-error {
+            display: none;
+        }
+
+        textarea {
+            width: 100%;
+        }
+    }
 }
