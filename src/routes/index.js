@@ -10,8 +10,8 @@ import Layout from '../components/hoc/Layout';
 import Profile from '../components/Profile';
 import User from '../containers/user';
 import NotFound from '../components/NotFound';
-import Followers from '../components/Followers';
-import Followed from '../components/Followed';
+import Followers from '../containers/followers';
+import Followed from '../containers/followed';
 
 
 const Routes = (props) => {

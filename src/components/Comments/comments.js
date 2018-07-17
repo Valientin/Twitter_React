@@ -79,7 +79,6 @@ class Comments extends React.Component {
                     commentError: ''
                 })
                 this.props.addTweetComment(this.props.userId, this.props.tweetId, dataToSubmit);
-                console.log(dataToSubmit);
             } else {
                 this.setState({
                     commentError: 'Коментарий пустой'

@@ -7,15 +7,36 @@ export function followedOnUser(profileID, userID){
         setFollowersUser: false
     }
 
-    firebaseDB.ref(`users/${profileID}/followed/${userID}`).set(true)
+    firebaseDB.ref('users/' + userID).once('value')
+    .then((snapshot) => {
+        const profileData = snapshot.val();
+        firebaseDB.ref(`users/${profileID}/followed/${userID}`).set({
+            color:profileData.color,
+            name:profileData.name,
+            lastname:profileData.lastname,
+            imageProfile: profileData.imageProfile
+        })
     .then(() => {
         request.setFollowedProfile = true;
+    })
     }).catch(err => console.log(err.message))
-    
-    firebaseDB.ref(`users/${userID}/followers/${profileID}`).set(true)
+
+    firebaseDB.ref('users/' + profileID).once('value')
+    .then((snapshot) => {
+        const profileData = snapshot.val();
+        const imageProfile = profileData.imageProfile ? profileData.imageProfile : null
+        const color = profileData.color ? profileData.color : '#1f8acc'
+        firebaseDB.ref(`users/${userID}/followers/${profileID}`).set({
+            color:color,
+            name:profileData.name,
+            lastname:profileData.lastname,
+            imageProfile: imageProfile
+        })
     .then(() => {
         request.setFollowersUser = true;
+    })
     }).catch(err => console.log(err.message))
+
 
     return {
         type: FOLLOWED_ON_USER,
