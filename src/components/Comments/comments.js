@@ -74,8 +74,14 @@ class Comments extends React.Component {
             dataToSubmit.userName = this.props.profileData.userName;
             dataToSubmit.logo = this.props.profileData.imageProfile;
             dataToSubmit.date = moment().format('MMMM Do YYYY, h:mm:ss');
+
             if(formIsValid){
+                const clearFormData = {...this.state.formData};
+                for(let key in clearFormData){
+                    clearFormData[key].value = '';
+                }
                 this.setState({
+                    formData: clearFormData,
                     commentError: ''
                 })
                 this.props.addTweetComment(this.props.userId, this.props.tweetId, dataToSubmit);

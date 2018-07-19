@@ -21,7 +21,7 @@ const AddComment = (props) => {
                 change={(elem) => props.updateForm(elem)}
             />
             <div className="tweet-comment__container">
-                <button className="tweet-comment__submit" onClick={(e) => props.submitForm(e, true)}>Добавить коментраий</button>
+                <button className="tweet-comment__submit" onClick={(e) => props.submitForm(e, true)}>+</button>
                 {showError()}
             </div>
         </form>
